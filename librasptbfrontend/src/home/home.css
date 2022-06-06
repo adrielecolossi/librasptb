@@ -1,0 +1,27 @@
+
+
+
+.topic{
+    width: 60%;
+    background-color: #f8d681;
+    margin:auto;
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+}
+.topic2{
+    width: 30%;
+    background-color: #f8d681;
+    margin:auto;
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+}
+
+h1{
+    justify-self: center;
+}
+
+h2{
+    padding:40px;
+}

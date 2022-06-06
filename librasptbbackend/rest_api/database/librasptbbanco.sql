@@ -2,9 +2,10 @@
 CREATE TABLE jogador(
       email VARCHAR(200) NOT NULL PRIMARY KEY, 
       datahoracadastro date NOT NULL DEFAULT current_timestamp check (datahoracadastro <= current_timestamp),
-      senha VARCHAR(30) NOT NULL check(length(senha)>=6),  --e menor igual a 30
+      senha VARCHAR(3000) NOT NULL check(length(senha)>=6),  --e menor igual a 30
       nome VARCHAR(500) NOT NULL,
       genero CHAR(1) NOT NULL check (genero = 'M' or genero = 'F' or genero = 'O'),
+      datadenascimento date NOT NULL,
       minigamesjogados VARCHAR(6) DEFAULT 0,  --botando um milhão porque vai que né
       minigamesvencidos VARCHAR(6) DEFAULT 0
 );
@@ -131,3 +132,6 @@ insert into usuariobanco(nome, email, senha) values('ADMLibrasPTB','librasptb@gm
 
 insert into categoria(id,nome,midia) values (1, 'Alimentos','https://docs.google.com/uc?id=1ndH_wvwuPOyURz5PAvtrOApq0Ip7-qyW')
 insert into categoria(id,nome,midia) values (2, 'Profissões','https://docs.google.com/uc?id=1YqAq0Bg_w5sC7rxtaPPf0U6RBcOthSyc')
+
+
+insert into jogador(email,senha,nome,genero, datadenascimento) values ('adriele.colossi4@gmail.com', 'c542223dfff2fd9cf3df99645fb7bed4', 'Adriele Colossi', 'F', '04/07/2003');

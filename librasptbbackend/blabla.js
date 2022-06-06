@@ -30,3 +30,4 @@ const downloadFile = async (fileUrl, downloadFolder) => {
 const IMAGE_URL =
   'https://www.kindacode.com/wp-content/uploads/2021/01/test.jpg';
 downloadFile(IMAGE_URL, 'download');
+

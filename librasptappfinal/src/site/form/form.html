@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title of the document</title>
+
+    <link rel="stylesheet" type="text/css" href="form.css" />
+  </head>
+
+  <body>
+    <div class="box-form">
+      <p class="content-form"></p>
+    </div>
+
+    <form>
+      <h1>Formulário de cadastro de questões</h1>
+
+      <fieldset>
+        <legend>Tipo de questão</legend>
+        <input type="radio" class="Tipo" name="AC" /><label for="Tipo"
+          >Associar colunas</label
+        >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="radio" class="Tipo" name="PLFD" /><label for="Tipo"
+          >Preencher lacuna da frase digitando</label
+        >
+        <br />
+        <br />
+        <input type="radio" class="Tipo" name="OP" /><label for="Tipo"
+          >Ordenar palavras de uma frase</label
+        >&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="radio" class="Tipo" name="PLFA" /><label for="Tipo"
+          >Preencher lacuna da frase com alternativas</label
+        >
+        <br />
+        <br />
+        <input type="radio" class="Tipo" name="DPI" /><label for="Tipo"
+          >Digitar palavra da imagem</label
+        >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="radio" class="Tipo" name="MAPV" /><label for="Tipo"
+          >Marcar alternativa da palavra do vídeo</label
+        >
+        <br />
+        <br />
+        <input type="radio" class="Tipo" name="DPV" /><label for="Tipo"
+          >Digitar palavra do vídeo</label
+        >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="radio" class="Tipo" name="MAPI" /><label for="Tipo"
+          >Marcar alternativa da palavra da imagem</label
+        >
+        <br />
+        <br />
+        <input type="radio" class="Tipo" name="DFV" /><label for="Tipo"
+          >Digitar frase de um vídeo em libras</label
+        >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="radio" class="Tipo" name="MAF" /><label for="Tipo"
+          >Marcar alternativa da frase</label
+        >
+      </fieldset>
+      <br>
+      <fieldset id="Tipo1">
+        <legend>Informações sobre a questão</legend>
+        <label>
+          <input
+            type="text"
+            name="categoria"
+            list="categorias"
+            placeholder="Categoria"
+            class="Categoria"
+          />
+          <datalist id="categorias">
+            <option value="Alimentos"></option>
+            <option value="Animais"></option>
+            <option value="Profissões"></option>
+          </datalist>
+          <br>
+          <p>Digite para criar uma nova categoria</p>
+          <br>
+          <button class="criarCategoria">Criar Categoria</button>
+        </label>
+         <br>
+         <br>
+        <div class="alts" onclick="">
+          <label for="altcerta"><input type="text" name="altcerta" id="altcerta" class="altcerta"
+            placeholder="Alternativa correta"></label> 
+          <label for="alterrada"><input type="text" name="alterrada" id="alterrada1" class="alterrada"
+            placeholder="Alternativa errada"></label> 
+          <label for="alterrada"><input type="text" name="alterrada" id="alterrada2" class="alterrada"
+            placeholder="Alternativa errada"></label> 
+          <label for="alterrada"><input type="text" name="alterrada" id="alterrada3" class="alterrada"
+            placeholder="Alternativa errada"></label> 
+          <label for="alterrada"><input type="text" name="alterrada" id="alterrada4" class="alterrada"
+            placeholder="Alternativa errada"></label> 
+        </div>
+      </fieldset>
+    
+      
+
+    </form>
+
+    <script type="text/javascript" src="form.js"></script>
+  </body>
+</html>

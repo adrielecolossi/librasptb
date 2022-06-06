@@ -13,6 +13,9 @@ exports.getQuestaoId = function(id){
     return questaoData.getQuestaoId(id)
 }
 
+exports.checkExistence = function(email){
+    return questaoData.checkExistence(email)
+}
 exports.getCategoria = function(){
     return questaoData.getCategoria()
 }
@@ -24,10 +27,18 @@ exports.getSenha = function(email){
 
     return questaoData.getSenha(email);
 }
+exports.getSenhaApp = function(email){
 
+    return questaoData.getSenhaApp(email);
+}
 exports.getUser = function(email){
 
+  
     return questaoData.getUser(email);
+}
+
+exports.cadastrarUsuario = function(email,nome,genero, datadenascimento, senha){
+    return questaoData.cadastrarUsuario(email,nome,genero, datadenascimento, senha);
 }
 /*
 const categoriaData = require('../data/categoriaData');

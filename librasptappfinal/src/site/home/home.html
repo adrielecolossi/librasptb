@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Title of the document</title>
+
+    <link rel="stylesheet" type="text/css" href="home.css">
+
+</head>
+
+<body>
+    <nav>
+        <img src="logolibraspt.png">
+        <li>
+            <ul>Login</ul>
+            <ul>Contato</ul>
+        </li>
+    </nav>
+
+<section>  
+    <p id='body-desc'>Nosso aplicativo tem como objetivo auxiliar os jogadores em seus estudos da escrita na Língua Portuguesa e
+        incentivar a leitura</p>
+
+    <div class='boxes'>
+        <div class='box'>
+            <p class='box-content'>Concluiu as cadeiras de LIBRAS em Língua Portuguesa e tem interesse no projeto?
+                Elabore uma questão clicando aqui!</p>
+        </div>
+       <br>
+        <div class='box' id='left'>
+            <p class='box-content'>Tem os direitos de alguma imagem ou gostaria de enviar um vídeo seu sinalizando uma
+                frase em LIBRAS para nós? Clique aqui!</p>
+        </div>
+        <br>
+        <div class='box'>
+            <p class='box-content'>Gostaria de registrar uma sugestão? Comunique para nós na aba de contatos ou faça
+                isso clicando aqui!</p>
+        </div>
+    </section>
+    <img src="logoifrs.png">
+
+    <script type="text/javascript">
+    let box;
+    function navigate(){
+        
+        str=window.location.href
+        console.log(str)
+        let x= str.substr(0, str.length-9) + 'form.html';
+        window.location.href= x;
+    }
+    for(let i=0;i<3;i++){
+        box = document.getElementsByClassName('box')[i]
+         box.addEventListener('click', navigate)
+    }
+         </script>
+</body>
+
+</html>

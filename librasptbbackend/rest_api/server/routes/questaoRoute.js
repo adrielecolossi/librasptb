@@ -61,13 +61,27 @@ const questao = await questaoService.getQuestaoId(req.params.id);
   })
 });
 
-
+router.post('/cadastrarUsuario',  async function (req, res) {
+  const email = req.body.email
+  const nome = req.body.nome
+  const genero = req.body.genero
+  const datadenascimento = req.body.data
+  const senha = md5(req.body.senha);
+  console.log(email,nome,genero, datadenascimento, senha)
+  const check = await questaoService.cadastrarUsuario(email,nome,genero, datadenascimento, senha);
+ res.json(check)
+});
 
 const upload = multer({ dest: 'uploads/' });
 
 // Configuramos o upload como um middleware que
 // espera um arquivo cujo a chave é "foto"
 
+router.post('/checkExistence',  async function (req, res) {
+  const email = req.body.email
+  const check = await questaoService.checkExistence(email);
+ res.json(check)
+});
 
 router.post('/imagem',  multer(multerConfig).single('file'), async function (req, res) {
  
@@ -92,6 +106,8 @@ router.post("/posts", multer(multerConfig).single("file"), async (req, res) => {
 
   return res.json(post);
 });
+
+
 */
 router.post("/questao", async function (req, res) {
   const tokenRecebido = req.body.token
@@ -131,6 +147,7 @@ const senhaUser = await questaoService.getSenha(email);
 
 console.log('SenhaUser', senhaUser);
 const senhaCriptografada=  md5(senha);
+if(senhaUser[0]!==undefined){
 if(senhaUser== undefined){
   erro='Este email não esta cadastrado no nosso banco de dados';
 }
@@ -146,9 +163,39 @@ if(senhaUser[0].senha == senhaCriptografada){
 } else {
   return res.status(400).json({ msg: erro});
 }
+} else{
+  return res.status(400).json({msg:erro})
+}
 })
 
 
+router.post("/loginApp", async function (req, res, next) {
+  
+  const email = req.body.email
+  const senha = req.body.senha
+  const senhaUser = await questaoService.getSenhaApp(email);
+  const senhaCriptografada=  md5(senha);
+  if(senhaUser== undefined){
+    erro='Este email não esta cadastrado no nosso banco de dados';
+  }
+  if(senhaUser[0]!==undefined){
+  if(senhaUser[0].senha == senhaCriptografada){
+    token = jwt.sign(
+      {
+        email: email
+      },
+      'somesupersecretsecret'
+    );
+    return res.status(200).send({ token: token, email:email });    
+  } else {
+    return res.status(400).json({ msg: "Senha errada"});
+  }
+} else{
+  return res.status(405).json({msg:'Este email não esta cadastrado no nosso banco de dados'})
+}
+  //const senhaCriptografada=  md5(senha);
+
+  })
 
 /*
 router.post('/categoria', async function(req, res){
@@ -161,7 +208,8 @@ router.post('/categoria', async function(req, res){
 
 router.get("/categoria", async function (req, res) {
   const categoria = await questaoService.getCategoria();
-  //res.json(categoria);
+  res.json(categoria);
+
 });
 
 //module.exports = router;

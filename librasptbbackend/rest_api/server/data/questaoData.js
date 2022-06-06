@@ -48,7 +48,23 @@ exports.getSenha = function(email){
   return  database.query("select usuariobanco.senha from usuariobanco where usuariobanco.email='" + email + "'")
  }
  
+ exports.getSenhaApp = function(email){
+
+  // return  database.query("select usuario.senha from usuario where usuario.email = 'adriele.colossi4@gmail.com'");
+   //select usuario.senha from usuario where usuario.email = 'adriele.colossi4@gmail.com'
+  return  database.query("select jogador.senha from jogador where jogador.email='" + email + "'")
+ }
+
  exports.getUser = function(email){
    return  database.query("select usuariobanco.nome from usuariobanco where usuariobanco.email = '" + email + "'")
  }
  
+
+ exports.checkExistence = function(email){
+  return database.query("select nome from jogador where email='" + email + "'")
+}
+
+exports.cadastrarUsuario = function(email, nome, genero, datadenascimento, senha){ 
+  //console.log(nome, genero, datadenascimento, senha)
+// return database.none("insert into jogador(email,senha,nome,genero, datadenascimento) values ('"+ email + "', '" + senha +"', '"+ nome +"', "+ genero +", '" + datadenascimento +"' )");
+}
