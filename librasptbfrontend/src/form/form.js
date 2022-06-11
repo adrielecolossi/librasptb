@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./form.css";
-import HeaderOne from "../header/header.js";
+import HeaderOne from "../header/index.js";
 import axios, {post} from 'axios'
 const   token= localStorage.getItem("token");
 

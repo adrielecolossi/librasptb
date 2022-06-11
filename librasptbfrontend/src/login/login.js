@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./login.css";
 import { unmountComponentAtNode, render } from "react-dom";
-import HeaderOne from "../header/header.js";
+import HeaderOne from "../header/index.js";
 
 const axios = require("axios");
 

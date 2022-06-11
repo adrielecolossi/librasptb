@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios, {post} from 'axios'
-import HeaderOne from '../header/header.js'
+import HeaderOne from '../header/index.js'
 import './contato.css'
 
 export default function Contato() {

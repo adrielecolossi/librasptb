@@ -1,5 +1,5 @@
 
-import Home from "./home/home.js";
+import splashScreen from "./splashScreen/index.js";
 import Form from "./form/form.js";
 import Login from "./login/login.js";
 import Form2 from "./form/formimg.js";
@@ -16,7 +16,7 @@ function App() {
         <Route path="/form" component={Form}></Route>
         <Route path="/form2" component={Form2}></Route>
         <Route path="/contato" component={Contato}></Route>
-          <Route path="/" component={Home}></Route>
+          <Route path="/" component={splashScreen}></Route>
         </Switch>
      
       </Router>
