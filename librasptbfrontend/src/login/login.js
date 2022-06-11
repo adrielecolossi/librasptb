@@ -26,6 +26,7 @@ function Login() {
           localStorage.setItem("token", token);
           localStorage.setItem("user", emailLogado);
           alert("Autenticado");
+          window.location.href = 'http://localhost:3000/home';
         },
         (error) => {
           alert("Não autenticado, há erros na senha ou no email");

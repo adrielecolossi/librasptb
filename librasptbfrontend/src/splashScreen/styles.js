@@ -18,7 +18,7 @@ export const Banner = styled.div`
 
   h1 {
     font-weight: 400;
-    font-size: 1.4em;
+    font-size: 2em;
   }
 
   h2 {
@@ -28,11 +28,16 @@ export const Banner = styled.div`
   img {
     width: 27.5%;
   }
-  @media only screen and (min-width: 340px) and (max-device-width: 1000px) {
-    width: 65%;
-    height: 50%;
+  @media only screen and (min-width: 740px) and (max-device-width: 1000px) {
     img {
       width: 15%;
+    }
+  }
+    @media only screen and (min-width: 300px) and (max-device-width: 600px) {
+   
+    img {
+      width: 10%;
+      height: 10%;
     }
   }
 `;

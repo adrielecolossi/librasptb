@@ -12,7 +12,7 @@ export const DivCard = styled.div`
   div {
     display: flex;
     flex-direction: column;
-    font-size: 0.6em;
+    font-size: 1.2em;
     align-items: flex-start;
   }
   &:hover {
@@ -63,7 +63,7 @@ export const DivCard = styled.div`
     margin: auto;
     margin-top: 5%;
     div{
-      font-size: 0.65em
+      font-size: 0.7em
     }
     img{
       width:60%;
