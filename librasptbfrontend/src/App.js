@@ -5,6 +5,7 @@ import Login from "./login/login.js";
 import Form2 from "./form/formimg.js";
 import Contato from "./contato/contato.js";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Footer from './footer'
 function App() {
 
   return (
@@ -18,7 +19,7 @@ function App() {
         <Route path="/contato" component={Contato}></Route>
           <Route path="/" component={splashScreen}></Route>
         </Switch>
-     
+        <Footer/>
       </Router>
     </div>
   );
