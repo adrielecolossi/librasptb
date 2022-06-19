@@ -37,7 +37,8 @@ let response= await driveService.files.create({
 
 switch(response.status){
     case 200:
-         console.log("File created id:"+ response.data.id)
+         //console.log("File created id:"+ response.data.id)
+         return response.data.id;
          break;
          }
 
@@ -46,5 +47,3 @@ switch(response.status){
         //  createAndUploadFile('blabla.mp4','./rest_api/server/tmp/uploads/oi.mp4',auth)=
           //funciona o upload no google só não funciona o multer
         module.exports= {createAndUploadFile};
-
-    

@@ -12,7 +12,7 @@ for(let i=0; i<a.data.length; i++){
 categ.push(a.data[i].nome)
 //document.querySelector('datalist').innerHTML+=`<option value=${categ[i]}></option>` 
 }
-console.log(categ)
+
 callPrintAdress()
 };
 

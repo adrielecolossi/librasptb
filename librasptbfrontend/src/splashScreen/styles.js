@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Title = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   margin: 20px 30px 20px 30px;
 `;
 export const Banner = styled.div`
@@ -28,16 +28,22 @@ export const Banner = styled.div`
   img {
     width: 27.5%;
   }
-  @media only screen and (min-width: 740px) and (max-device-width: 1000px) {
+  @media only screen and (min-width: 600px) and (max-device-width: 800px) {
     img {
-      width: 15%;
+      width: 30%;
+      height: 100%;
     }
   }
-    @media only screen and (min-width: 300px) and (max-device-width: 600px) {
-   
+  @media only screen and (min-width: 450px) and (max-device-width: 600px) {
     img {
-      width: 10%;
-      height: 10%;
+      width: 35%;
+      height: 100%;
+    }
+  }
+  @media only screen and (min-width: 347px) and (max-device-width: 450px) {
+    img {
+      width: 20%;
+      height: 100%;
     }
   }
 `;

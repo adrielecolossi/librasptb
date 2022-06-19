@@ -1,14 +1,20 @@
 import React from "react";
-import { DivCard } from "./styles";
+import { DivCard, Div } from "./styles";
+import { Link } from "react-router-dom";
+
 function Card(props) {
   return (
-    <DivCard>
-      <img src={props.image} />
-      <div>
-        <h3>{props.title}</h3>
-        <h6>{props.subtitle}</h6>
-      </div>
-    </DivCard>
+    <Div>
+    <Link to={props.link}>
+      <DivCard>
+        <img src={props.image} />
+        <div>
+          <h3>{props.title}</h3>
+          <h6>{props.subtitle}</h6>
+        </div>
+      </DivCard>
+    </Link>
+    </Div>
   );
 }
 

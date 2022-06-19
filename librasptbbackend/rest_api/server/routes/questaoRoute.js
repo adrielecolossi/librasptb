@@ -61,6 +61,25 @@ const questao = await questaoService.getQuestaoId(req.params.id);
   })
 });
 
+router.post('/questaoDigitarMidia', async function (req,res ){
+  const tokenRecebido = req.body.token
+  let questao= req.body;
+ // console.log(questao);
+  let decodedToken;
+  try {
+    decodedToken = jwt.verify(tokenRecebido, 'somesupersecretsecret');
+  } catch (err) {
+    err.statusCode = 500;
+   return res.json({msg: 'Falha ao cadastrar uma questão. Faça primeiro o login.'})
+  }
+  if(decodedToken){
+   const newQuestao = await questaoService.saveQuestaoDigitarMidia(questao);
+    return res.json({msg: 'Sucesso ao cadastrar uma questão'});  
+  } else{
+    return res.json({ msg: 'Falha ao cadastrar uma questão. Faça primeiro o login.'});   
+  }
+
+});
 router.post('/cadastrarUsuario',  async function (req, res) {
   const email = req.body.email
   const nome = req.body.nome
@@ -91,9 +110,10 @@ path.resolve(__dirname, "..", "..", "tmp", "uploads")
 console.log(req.file)
 //console.log("file name", req);                                           
 //console.log("file path", req.files.file.path);  
-createAndUploadFile(req.baseUrl,'./rest_api/server/tmp/uploads/' + req.file.filename,auth)
+const resp = await createAndUploadFile(req.baseUrl,'./rest_api/server/tmp/uploads/' + req.file.filename,auth)
  //const newQuestao = await questaoService.saveQuestao(questao);
-return res.json(req.file);
+
+return res.send(resp);
 })
 
 
@@ -197,18 +217,19 @@ router.post("/loginApp", async function (req, res, next) {
 
   })
 
-/*
+
 router.post('/categoria', async function(req, res){
   const categoria = req.body;
-  console.log('oi')
-  const newCategoria = await categoriaService.saveCategoria(categoria)
+
+  const newCategoria = await questaoService.saveCategoria(categoria)
   res.json(newCategoria);
   });
-*/
+
 
 router.get("/categoria", async function (req, res) {
   const categoria = await questaoService.getCategoria();
-  res.json(categoria);
+
+  res.send(categoria);
 
 });
 

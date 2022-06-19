@@ -10,21 +10,12 @@ CREATE TABLE jogador(
       minigamesvencidos VARCHAR(6) DEFAULT 0
 );
 
-
-CREATE TABLE categoria(
-      id SERIAL NOT NULL PRIMARY KEY,
-      nome VARCHAR(200) NOT NULL,
-      imagem VARCHAR(200),
-      video VARCHAR(200)
-);
-
 CREATE TABLE midia(
       id SERIAL NOT NULL PRIMARY KEY,
-      url VARCHAR(200) NOT NULL,
-	  nome VARCHAR(200) NOT NULL,
-	  tipo VARCHAR(60) NOT NULL,
-	  descricao VARCHAR(200) NOT NULL
-	
+      url VARCHAR(200) NOT NULL
+--	  nome VARCHAR(200) NOT NULL,
+--	  tipo VARCHAR(60) NOT NULL,
+--	  descricao VARCHAR(200) NOT NULL	
  );
 
 CREATE TABLE questao(
@@ -32,29 +23,36 @@ CREATE TABLE questao(
 );
 
 CREATE TABLE ordenar(
-      frase VARCHAR(300) NOT NULL
-) INHERITS (questao);
+        questao INTEGER NOT NULL,
+      frase VARCHAR(300) NOT NULL,
+           FOREIGN KEY (questao) REFERENCES questao(id)
+);
 
 CREATE TABLE completar(
+        questao INTEGER NOT NULL,
       frase VARCHAR(300) NOT NULL,
       opcao1 varchar(70),
       opcao2 varchar(70),
       opcao3 varchar(70),
       opcao4 varchar(70),
-      opcao5 varchar(70)
-) INHERITS (questao);
+      opcao5 varchar(70),
+         
+);
 
 
 CREATE TABLE marcar(
+       questao INTEGER NOT NULL,
       opcao1 varchar(70), --é a opção correta
       opcao2 varchar(70),
       opcao3 varchar(70),
       opcao4 varchar(70),
-      opcao5 varchar(70)
-) INHERITS (questao);
+      opcao5 varchar(70),
+      FOREIGN KEY (questao) REFERENCES questao(id)
+);
 
 
 CREATE TABLE associar(
+       questao INTEGER NOT NULL,
       opcao1 varchar(70),
       opcao2 varchar(70),
       opcao3 varchar(70),
@@ -64,45 +62,69 @@ CREATE TABLE associar(
       opcao7 varchar(70),
       opcao8 varchar(70),
 	opcao9 varchar(70),
-      opcao10 varchar(70)
-) INHERITS (questao);
+      opcao10 varchar(70),
+       FOREIGN KEY (questao) REFERENCES questao(id)
+);
 
 CREATE TABLE preencherdigitando(
+        questao INTEGER NOT NULL,
       frase VARCHAR(300) NOT NULL,
-      resposta varchar(40)
-) INHERITS (questao);
+      resposta varchar(40),
+      FOREIGN KEY (questao) REFERENCES questao(id)
+) 
 
 CREATE TABLE preencheralternativa(
+       questao INTEGER NOT NULL,
       frase VARCHAR(300) NOT NULL,
       opcao1 varchar(70),
       opcao2 varchar(70),
       opcao3 varchar(70),
       opcao4 varchar(70),
-      opcao5 varchar(70)
-) INHERITS (questao);
+      opcao5 varchar(70),
+      FOREIGN KEY (questao) REFERENCES questao(id)
+) 
 
 CREATE TABLE digitarmidia(
-      resposta varchar(40)
-) INHERITS (questao);
-
-CREATE TABLE questaomidiacategoria(
       questao INTEGER NOT NULL,
-      categoria INTEGER NOT NULL,
-      midia INTEGER NOT NULL,
-      FOREIGN KEY (questao) REFERENCES questao(id),
-      FOREIGN KEY (categoria) REFERENCES categoria(id),
-      FOREIGN KEY (midia) REFERENCES midia(id),
-	PRIMARY KEY(questao, categoria)
+      resposta varchar(40),
+FOREIGN KEY (questao) REFERENCES questao(id)
 );
 
---CREATE TABLE midiacategoria(
-  --    categoria INTEGER NOT NULL,
-    --  midia INTEGER NOT NULL,
-     -- FOREIGN KEY (categoria) REFERENCES categoria(id),
+--CREATE TABLE questaomidiacategoria(
+  --    questao INTEGER NOT NULL,
+    --  categoria INTEGER NOT NULL,
+     -- midia INTEGER NOT NULL,
+     -- FOREIGN KEY (questao) REFERENCES questao(id),
+      --FOREIGN KEY (categoria) REFERENCES categoria(id),
       --FOREIGN KEY (midia) REFERENCES midia(id),
---	PRIMARY KEY(categoria, midia)
+	--PRIMARY KEY(questao, categoria)
 --);
 
+CREATE TABLE questaomidia(
+      questao INTEGER NOT NULL,
+     midia INTEGER NOT NULL,
+     FOREIGN KEY (questao) REFERENCES questao(id),
+     FOREIGN KEY (midia) REFERENCES midia(id),
+     PRIMARY KEY(questao, midia)
+);
+
+CREATE TABLE questaocategoria(
+      questao INTEGER NOT NULL,
+     categoria INTEGER NOT NULL,
+     FOREIGN KEY (questao) REFERENCES questao(id),
+     FOREIGN KEY (categoria) REFERENCES categoria(id),
+     PRIMARY KEY(questao, categoria)
+     
+);
+/*
+CREATE TABLE midiacategoria(
+    categoria INTEGER NOT NULL,
+   midia INTEGER NOT NULL,
+   FOREIGN KEY (categoria) REFERENCES categoria(id),
+      FOREIGN KEY (midia) REFERENCES midia(id),
+	PRIMARY KEY(categoria, midia)
+);
+*/
 CREATE TABLE usuariobanco(
       nome VARCHAR(200) NOT NULL,
       email VARCHAR(200) NOT NULL PRIMARY KEY,
@@ -118,9 +140,6 @@ CREATE TABLE historico(
       FOREIGN KEY (questao) REFERENCES questao(id),
       PRIMARY KEY(jogador, questao)
 );
-
-insert into categoria(nome, midia, video) values('Animais', 'https://drive.google.com/thumbnail?id=1Wd_G20x5PbXYf9plR1rux7ttHCpgvktw', 'noOne');
-
 
 CREATE TABLE categoria(
       id SERIAL NOT NULL PRIMARY KEY,

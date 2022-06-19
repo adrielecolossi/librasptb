@@ -1,9 +1,21 @@
 import styled from "styled-components";
+export const Div = styled.div`
+  width: 45%;
+  a {
+    text-decoration: none;
+  }
+
+  @media only screen and (min-width: 300px) and (max-device-width: 900px) {
+    width: 100%;
+  }
+
+`;
 export const DivCard = styled.div`
+  color: black;
   display: flex;
   background-color: white;
   border-radius: 20px;
-  width: 45%;
+  width: 100%;
   margin-bottom: 2%;
   img {
     width: 40%;
@@ -16,7 +28,7 @@ export const DivCard = styled.div`
     align-items: flex-start;
   }
   &:hover {
-    background-color: #F7F7F7;
+    background-color: #f7f7f7;
     opacity: 0.8;
     cursor: pointer;
   }
@@ -27,34 +39,32 @@ export const DivCard = styled.div`
     margin: 0px;
     font-weight: 400;
   }
-  
 
-
-  @media only screen and  (max-device-width: 1500px) {
-    div{
-      font-size: 0.9em
+  @media only screen and (max-device-width: 1500px) {
+    div {
+      font-size: 1.2em;
     }
   }
+
   @media only screen and (min-width: 900px) and (max-device-width: 1000px) {
-    div{
-      font-size: 0.8em
+    div {
+      font-size: 0.8em;
     }
-    img{
-      width:55%;
+    img {
+      width: 30%;
       height: 100%;
     }
   }
-
 
   @media only screen and (min-width: 800px) and (max-device-width: 900px) {
     width: 60%;
     margin: auto;
     margin-top: 5%;
-    div{
-      font-size: 0.7em
+    div {
+      font-size: 1em;
     }
-    img{
-      width:60%;
+    img {
+      width: 50%;
       height: 100%;
     }
   }
@@ -62,61 +72,56 @@ export const DivCard = styled.div`
     width: 60%;
     margin: auto;
     margin-top: 5%;
-    div{
-      font-size: 0.7em
+    div {
+      font-size: 0.9em;
     }
-    img{
-      width:60%;
+    img {
+      width: 50%;
       height: 100%;
     }
   }
 
-  @media only screen and (min-width: 500px) and (max-device-width: 715px) {
+  @media only screen and (min-width: 520px) and (max-device-width: 715px) {
     width: 70%;
     margin: auto;
     margin-top: 5%;
-    div{
-      font-size: 0.55em
+    div {
+      font-size: 0.8em;
     }
-    img{
-      width:60%;
+    img {
+      width: 50%;
       height: 100%;
     }
   }
-  @media only screen and (min-width: 450px) and (max-device-width: 505px) {
-    width: 80%;
+  @media only screen and (min-width: 450px) and (max-device-width: 519px) {
+    width: 100%;
     margin: auto;
-    margin-top: 5%;
-    div{
-      font-size: 0.5em
-    }
-    img{
-      width:60%;
-      height: 100%;
+    margin-top: 2%;
+    div {
+      font-size: 0.7em;
     }
   }
   @media only screen and (min-width: 300px) and (max-device-width: 450px) {
     width: 90%;
     margin: auto;
     margin-top: 5%;
-    
-    div{
-      font-size: 0.5em
+
+    div {
+      font-size: 0.5em;
     }
-    img{
-      width:40%;
+    img {
+      width: 40%;
       height: 100%;
     }
   }
   @media only screen and (max-device-width: 300px) {
-
     margin: auto;
-    margin-top: 5%; 
-    div{
-      font-size: 0.4em
+    margin-top: 5%;
+    div {
+      font-size: 0.4em;
     }
-    img{
-      width:60%;
+    img {
+      width: 60%;
       height: 100%;
     }
   }
