@@ -2,12 +2,12 @@ import React from "react";
 import HeaderOne from "../header/index.js";
 import { DivInputForm, Title, DivSelect, SendButton, Input } from "./styles.js";
 
-function FormLacunaFraseAlternativa() {
+function FormMarcarLacuna() {
   return (
     <>
       <HeaderOne logged={true}></HeaderOne>
       <Title fontSize={2.5} color={"#000000"}>
-        Preencher lacuna da frase com alternativa
+        Marcar Lacuna com Alternativa
       </Title>
       <Title fontSize={1} color={"#7A7A7A"}>
         Modelo em que se marca uma alternativa para preencher frase
@@ -80,4 +80,4 @@ function FormLacunaFraseAlternativa() {
     </>
   );
 }
-export default FormLacunaFraseAlternativa;
+export default FormMarcarLacuna;

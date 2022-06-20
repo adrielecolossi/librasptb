@@ -7,7 +7,7 @@ import Modal from "react-modal";
 const token = localStorage.getItem("token");
 
 //FORMS
-function FormDigitarPalavraVideoLibras() {
+function FormOrdenarFrase() {
   const criaCategoria = async (e) => {
     e.preventDefault();
     console.log(nomeCategoria);
@@ -42,20 +42,19 @@ function FormDigitarPalavraVideoLibras() {
     e.preventDefault();
     if (
       categoriaQuestao == undefined ||
-      palavraQuestao == undefined ||
-      videoQuestao == undefined
+      fraseQuestao == undefined 
     ) {
       alert("Dados incompletos");
     } else {
       const fd = new FormData();
       fd.append("file", imagemCategoria);
-
       const response = await axios.post("http://localhost:3001/imagem", fd);
       console.log(response.data);
       const midia = "https://drive.google.com/uc?id=" + response.data;
       axios
         .post("http://localhost:3001/questaoDigitarMidia", {
-          resposta: palavraQuestao,
+          token,
+          resposta: fraseQuestao,
           midia,
           categoria: categoriaQuestao,
         })
@@ -68,8 +67,7 @@ function FormDigitarPalavraVideoLibras() {
         });
     }
     console.log(categoriaQuestao);
-    console.log(palavraQuestao);
-    console.log(videoQuestao);
+    console.log(fraseQuestao);
   };
 
   //MODAL
@@ -86,8 +84,7 @@ function FormDigitarPalavraVideoLibras() {
   const [categorias, setCategorias] = useState([]);
   const [nomeCategoria, setNomeCategoria] = useState();
   const [imagemCategoria, setImagemCategoria] = useState();
-  const [videoQuestao, setVideoQuestao] = useState();
-  const [palavraQuestao, setPalavraQuestao] = useState();
+  const [fraseQuestao, setFraseQuestao] = useState();
   const [categoriaQuestao, setCategoriaQuestao] = useState();
   const [showModal, setShowModal] = useState(false);
 
@@ -110,10 +107,10 @@ function FormDigitarPalavraVideoLibras() {
     <>
       <HeaderOne logged={true} />
       <Title fontSize={2.5} color={"#000000"}>
-        Digitar palavra do vídeo em libras
+        Ordenar frase
       </Title>
       <Title fontSize={1} color={"#7A7A7A"}>
-        Modelo em que se digita palavra do vídeo em libras
+        Modelo em que se ordena palavras de uma frase
       </Title>
       <Div>
         <DivForm>
@@ -134,23 +131,15 @@ function FormDigitarPalavraVideoLibras() {
                 })}
               </select>
             </DivSelect>
+            
             <DivInput>
-              <label for="inputvid">Vídeo </label>
+              <label for="inputfrase">Frase </label>
               <input
-                id="inputvid"
-                type="file"
-                name="url"
-                onChange={(v) => setVideoQuestao(v.target.files[0])}
-              ></input>
-            </DivInput>
-            <DivInput>
-              <label for="inputpalavra">Palavra </label>
-              <input
-                id="inputpalavra"
+                id="inputfrase"
                 type="text"
-                name="palavraQuestao"
-                onChange={(v) => setPalavraQuestao(v.target.value)}
-                value={palavraQuestao}
+                name="fraseQuestao"
+                onChange={(v) => setFraseQuestao(v.target.value)}
+                value={fraseQuestao}
               />
             </DivInput>
             <Button
@@ -253,4 +242,4 @@ function FormDigitarPalavraVideoLibras() {
   );
 }
 
-export default FormDigitarPalavraVideoLibras;
+export default FormOrdenarFrase;

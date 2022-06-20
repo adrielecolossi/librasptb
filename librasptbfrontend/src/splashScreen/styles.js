@@ -40,7 +40,7 @@ export const Banner = styled.div`
       height: 100%;
     }
   }
-  @media only screen and (min-width: 347px) and (max-device-width: 450px) {
+  @media only screen and (min-width: 300px) and (max-device-width: 450px) {
     img {
       width: 20%;
       height: 100%;

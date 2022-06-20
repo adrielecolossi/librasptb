@@ -1,18 +1,15 @@
 import FormAssociarColunas from "./formAssociarColunas/index.js";
-import FormLacunaFraseAlternativa from "./formLacunaFraseAlternativa/index.js";
-import FormLacunaFraseDigitando from "./formLacunaFraseDigitando/index.js";
+import FormMarcarLacuna from "./formMarcarLacuna/index.js";
+import FormDigitarLacuna from "./formDigitarLacuna/index.js";
 import splashScreen from "./splashScreen/index.js";
 import Form from "./form/form.js";
 import Login from "./login/login.js";
 import Form2 from "./form/formimg.js";
 import Contato from "./contato/contato.js";
-import FormDigitarPalavraVideo from "./formDigitarPalavraVideo/index.js";
-import FormDigitarPalavraImagem from "./formDigitarPalavraImagem/index.js";
-import FormDigitarPalavraVideoLibras from "./formDigitarPalavraVideoLibras/index.js";
-import FormAlternativaVideo from "./formAlternativaVideo/index.js";
-import FormAlternativaImagem from "./formAlternativaImagem/index.js";
+import FormDigitarPalavra from "./formDigitarPalavra/index.js";
+import FormAlternativaCorreta from "./formAlternativaCorreta/index.js";
 import FormAlternativaFraseCorreta from "./formAlternativaFraseCorreta/index.js";
-import FormOrdenarPalavraFrase from "./formOrdenarPalavrasFrase/index.js";
+import FormOrdenarFrase from "./formOrdenarFrase/index.js";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Footer from "./footer";
 function App() {
@@ -26,55 +23,37 @@ function App() {
             component={FormAssociarColunas}
           ></Route>
           <Route
-            path="/FormLacunaFraseAlternativa"
+            path="/FormMarcarLacuna"
             exact
             strict
-            component={FormLacunaFraseAlternativa}
+            component={FormMarcarLacuna}
           ></Route>
           <Route
-            path="/FormLacunaFraseDigitando"
+            path="/FormDigitarLacuna"
             exact
             strict
-            component={FormLacunaFraseDigitando}
+            component={FormDigitarLacuna}
           ></Route>
           <Route path="/form" component={Form}></Route>
           <Route path="/form2" component={Form2}></Route>
           <Route path="/contato" component={Contato}></Route>
           <Route
-            path="/FormDigitarPalavraVideo"
+            path="/FormDigitarPalavra"
             exact
             strict
-            component={FormDigitarPalavraVideo}
+            component={FormDigitarPalavra}
           ></Route>
           <Route
-            path="/FormDigitarPalavraImagem"
+            path="/FormOrdenarFrase"
             exact
             strict
-            component={FormDigitarPalavraImagem}
+            component={FormOrdenarFrase}
           ></Route>
           <Route
-            path="/FormDigitarPalavraVideoLibras"
+            path="/FormAlternativaCorreta"
             exact
             strict
-            component={FormDigitarPalavraVideoLibras}
-          ></Route>
-          <Route
-            path="/FormOrdenarPalavraFrase"
-            exact
-            strict
-            component={FormOrdenarPalavraFrase}
-          ></Route>
-          <Route
-            path="/FormAlternativaVideo"
-            exact
-            strict
-            component={FormAlternativaVideo}
-          ></Route>
-          <Route
-            path="/FormAlternativaImagem"
-            exact
-            strict
-            component={FormAlternativaImagem}
+            component={FormAlternativaCorreta}
           ></Route>
           <Route
             path="/FormAlternativaFraseCorreta"

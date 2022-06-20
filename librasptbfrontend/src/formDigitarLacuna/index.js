@@ -2,12 +2,12 @@ import Reac from "react";
 import HeaderOne from "../header/index.js";
 import { DivInputForm, Title, DivSelect, SendButton, Input } from "./styles.js";
 
-function FormLacunaFraseDigitando() {
+function FormDigitarLacuna() {
   return (
     <>
       <HeaderOne logged={true}></HeaderOne>
       <Title fontSize={2.5} color={"#000000"}>
-        Preencher lacuna da frase digitando
+        Digitar lacuna
       </Title>
       <Title fontSize={1} color={"#7A7A7A"}>
         Modelo em que se digita uma palavra para preencher uma frase
@@ -45,4 +45,4 @@ function FormLacunaFraseDigitando() {
     </>
   );
 }
-export default FormLacunaFraseDigitando;
+export default FormDigitarLacuna;

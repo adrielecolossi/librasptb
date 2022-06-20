@@ -7,7 +7,7 @@ import Modal from "react-modal";
 const token = localStorage.getItem("token");
 
 //FORMS
-function FormDigitarPalavraVideo() {
+function FormDigitarPalavra() {
   const criaCategoria = async (e) => {
     e.preventDefault();
     console.log(nomeCategoria);
@@ -109,10 +109,10 @@ if(categoriaQuestao== undefined || palavraQuestao == undefined || imagemQuestao=
     <>
       <HeaderOne logged={true} />
       <Title fontSize={2.5} color={"#000000"}>
-        Digitar palavra do vídeo{" "}
+        Digitar palavra da imagem/vídeo
       </Title>
       <Title fontSize={1} color={"#7A7A7A"}>
-        Modelo em que se digita palavra do vídeo (não em libras){" "}
+        Modelo em que se digita palavra do vídeo/imagem
       </Title>
     <Div>
       <DivForm>
@@ -134,7 +134,7 @@ if(categoriaQuestao== undefined || palavraQuestao == undefined || imagemQuestao=
             </select>
           </DivSelect>
           <DivInput>
-            <label for="inputimg">Vídeo </label>
+            <label for="inputimg">Imagem/GIF </label>
             <input
               id="inputimg"
               type="file"
@@ -252,4 +252,4 @@ if(categoriaQuestao== undefined || palavraQuestao == undefined || imagemQuestao=
   );
 }
 
-export default FormDigitarPalavraVideo;
+export default FormDigitarPalavra;

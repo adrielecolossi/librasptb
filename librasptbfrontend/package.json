@@ -28,7 +28,8 @@
     "request": "^2.88.2",
     "spdy-transport": "^3.0.0",
     "styled-components": "^5.3.5",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.0.1",
+    "yarn": "^1.22.19"
   },
   "scripts": {
     "start": "react-scripts start",

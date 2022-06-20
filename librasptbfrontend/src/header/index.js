@@ -2,13 +2,20 @@ import React from "react";
 import { Header } from "./styles";
 
 import { Link } from "react-router-dom";
+
+
 function HeaderOne(props) {
+
+function removeStorage(){
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+}
   if (props.logged == true) {
     return (
       <>
         <Header>
           <Link to="/home">Home</Link>
-          <Link to="/home">Logout</Link>
+          <a onClick={removeStorage}>Logout</a>
         </Header>
       </>
     );
