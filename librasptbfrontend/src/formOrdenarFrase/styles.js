@@ -53,7 +53,6 @@ export const DivInput = styled.div`
   margin-top: 3%;
   margin-bottom: 5%;
   input {
-    background-color: rgba(142, 202, 230, 0.5);
     padding: 10%;
     border: none;
     width: 90%;
@@ -71,16 +70,6 @@ export const DivInput = styled.div`
       width: 53%;
     }
   }
-`;
-
-export const Button = styled.button`
-  background-color: ${(props) => props.backgroundColor};
-  color: ${(props) => props.color};
-  border-radius: ${(props) => props.borderRadius};
-  border: none;
-  padding: 5%;
-  cursor: pointer;
-  margin: 2%;
 `;
 
 export const Container = styled.div`

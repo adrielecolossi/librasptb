@@ -1,8 +1,17 @@
-import Reac from "react";
+import React from "react";
 import HeaderOne from "../header/index.js";
-import { DivInputForm, Title, DivSelect, SendButton, Input } from "./styles.js";
-
+import { DivInputForm, Title, DivSelect } from "./styles.js";
+import ButtonJS from "../components/Input/Button/index.js";
+import InputJS from "../components/Input/index.js";
 function FormDigitarLacuna() {
+  const categorias = [
+    {
+      name: "Matemática",
+    },
+    {
+      name: "Biologia",
+    }
+  ]
   return (
     <>
       <HeaderOne logged={true}></HeaderOne>
@@ -15,32 +24,51 @@ function FormDigitarLacuna() {
 
       <DivInputForm>
         <DivSelect>
-          <label for="categoria"> Categoria</label>
-          <select name="categoria">
-            <option> Matemática </option>
-            <option> Biologia </option>
+          <label for="categoria">Categoria</label>
+          <select
+            id="categoria"
+            style={{ marginLeft: "5%" }}
+          >
+            {categorias.map((categoria) => {
+              return (
+                <option key={categoria.nome} value={categoria.id}>
+                  {categoria.nome}
+                </option>
+              );
+            })}
           </select>
-          <br />
-          <button> Criar Categoria </button>
+          <ButtonJS
+            onClick={""}
+            backgroundColor={"#8ECAE6"}
+            color={"#000000"}
+            borderRadius={0}
+            name={"Criar Categoria"}
+          />
         </DivSelect>
       </DivInputForm>
       <DivInputForm>
         <div>
           <label for="inputimg">Imagem</label>
-          <Input name="inputimg" type="file" color={"#8ECAE6"}></Input>
+          <InputJS name="inputimg" type="file" color={"rgba(142, 202, 230, 0.5)"}></InputJS>
         </div>
         <br />
         <div>
           <label for="frase">Frase</label>
-          <Input name="frase" type="text" color={"#8ECAE6"}></Input>
+          <InputJS name="frase" type="text" color={"rgba(142, 202, 230, 0.5)"}></InputJS>
         </div>
         <br />
         <div>
           <label for="lacuna">Palavra que será a lacuna</label>
-          <Input name="lacuna" type="text" color={"#8ECAE6"}></Input>
+          <InputJS name="lacuna" type="text" color={"rgba(142, 202, 230, 0.5)"}></InputJS>
         </div>
         <br />
-        <SendButton> Enviar </SendButton>
+          <ButtonJS
+            onClick={""}
+            backgroundColor={"#219EBC"}
+            color={"#FFFF"}
+            borderRadius={0}
+            name={"Criar Questão"}
+          />
       </DivInputForm>
     </>
   );

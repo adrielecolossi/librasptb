@@ -4,29 +4,8 @@ export const Title = styled.h1`
   font-size: ${(props) => `${props.fontSize}em`};
   color: ${(props) => props.color};
   font-weight: 400;
-
   margin-top: 1%;
   margin-left: 3%;
-`;
-
-export const SendButton = styled.button`
-  :hover {
-    cursor: pointer;
-    background-color: rgba(26, 123, 147);
-  }
-  margin: auto;
-  padding: 15px;
-  width: 15%;
-  color: white;
-  background-color: rgba(33, 158, 188, 1);
-  font-weight: bold;
-  font-size: 1em;
-  border-radius: 5px;
-  border: none;
-  @media only screen and (min-width: 300px) and (max-device-width: 500px) {
-    width: 40%;
-    margin-top: 4%;
-  }
 `;
 
 export const DivInputForm = styled.form`
@@ -51,14 +30,6 @@ export const DivInputForm = styled.form`
       width: 80%;
     }
   }
-`;
-
-export const Input = styled.input`
-  background-color: ${(props) => props.color};
-  border: none;
-  padding: 10px;
-  margin: 2px 2px 2px 2px;
-  cursor: pointer;
 `;
 
 export const DivSelect = styled.div`

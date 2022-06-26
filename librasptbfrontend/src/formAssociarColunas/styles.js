@@ -82,23 +82,6 @@ export const Title = styled.h1`
   margin-left: 3%;
 `;
 
-export const SendButton = styled.button`
-  padding: 15px;
-  width: 15%;
-  color: white;
-  background-color: rgba(33, 158, 188, 1);
-  font-weight: bold;
-  font-size: 1em;
-  border-radius: 5px;
-  border: none;
-  margin-top: 2%;
-  margin-bottom: 2%;
-  @media only screen and (min-width: 300px) and (max-device-width: 500px) {
-    width: 30%;
-    margin-top: 4%;
-  }
-`;
-
 export const DivInputForm = styled.form`
   display: flex;
   flex-direction: column;

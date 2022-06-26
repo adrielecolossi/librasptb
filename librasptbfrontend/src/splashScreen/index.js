@@ -1,8 +1,7 @@
 import React from "react";
 import HeaderOne from "../header/index.js";
 import { Banner, BannerCards, Title } from "./styles";
-import Card from "../components/Card";
-
+import Card from "../components/Input/Card";
 
 function SplashScreen() {
   const cardsContent = [

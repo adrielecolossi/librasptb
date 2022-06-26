@@ -1,8 +1,17 @@
 import React from "react";
 import HeaderOne from "../header/index.js";
-import { DivInputForm, Title, DivSelect, SendButton, Input } from "./styles.js";
-
+import { DivInputForm, Title, DivSelect} from "./styles.js";
+import ButtonJS from "../components/Input/Button/index.js";
+import InputJS from "../components/Input/index.js";
 function FormAlternativaFraseCorreta() {
+  const categorias = [
+    {
+      name: "Matemática",
+    },
+    {
+      name: "Biologia",
+    }
+  ]
   return (
     <>
       <HeaderOne logged={true}></HeaderOne>
@@ -15,67 +24,86 @@ function FormAlternativaFraseCorreta() {
 
       <DivInputForm>
         <DivSelect>
-          <label for="categoria"> Categoria</label>
-          <select name="categoria">
-            <option> Matemática </option>
-            <option> Biologia </option>
+          <label for="categoria">Categoria</label>
+          <select
+            id="categoria"
+            style={{ marginLeft: "5%" }}
+          >
+            {categorias.map((categoria) => {
+              return (
+                <option key={categoria.nome} value={categoria.id}>
+                  {categoria.nome}
+                </option>
+              );
+            })}
           </select>
-          <br />
-          <button> Criar Categoria </button>
+          <ButtonJS
+            onClick={""}
+            backgroundColor={"#8ECAE6"}
+            color={"#000000"}
+            borderRadius={0}
+            name={"Criar Categoria"}
+          />
         </DivSelect>
       </DivInputForm>
       <DivInputForm>
         <div>
           <label for="frase">Frase</label>
-          <Input name="frase" type="text" color={"#8ECAE6"}></Input>
+          <InputJS name="frase" type="text" color={"rgba(142, 202, 230, 0.5)"}></InputJS>
         </div>
         <br />
         <div>
           <label for="correct">Alternativa Correta</label>
-          <Input
+          <InputJS
             name="correct"
             type="text"
             color={"rgba(144, 230, 142, 0.5)"}
-          ></Input>
+          ></InputJS>
         </div>
         <br />
         <div>
           <label for="wrong1">Alternativa Errada</label>
-          <Input
+          <InputJS
             name="wrong1"
             type="text"
             color={"rgba(252, 65, 65, 0.5)"}
-          ></Input>
+          ></InputJS>
         </div>
         <br />
         <div>
           <label for="wrong2">Alternativa Errada</label>
-          <Input
+          <InputJS
             name="wrong2"
             type="text"
             color={"rgba(252, 65, 65, 0.5)"}
-          ></Input>
+          ></InputJS>
         </div>
         <br />
         <div>
           <label for="wrong3">Alternativa Errada</label>
-          <Input
+          <InputJS
             name="wrong3"
             type="text"
             color={"rgba(252, 65, 65, 0.5)"}
-          ></Input>
+          ></InputJS>
         </div>
         <br />
         <div>
           <label for="wrong4">Alternativa Errada</label>
-          <Input
+          <InputJS
             name="wrong4"
             type="text"
             color={"rgba(252, 65, 65, 0.5)"}
-          ></Input>
+          ></InputJS>
         </div>
         <br />
-        <SendButton> Enviar </SendButton>
+        <ButtonJS
+          onClick={""}
+          backgroundColor={"#219EBC"}
+          color={"#FFFF"}
+          borderRadius={0}
+          name={"Criar Questão"}
+        />
       </DivInputForm>
     </>
   );
