@@ -7,15 +7,16 @@ import { Link } from "react-router-dom";
 function HeaderOne(props) {
 
 function removeStorage(){
-  localStorage.removeItem('token');
+  localStorage.removeItem('tokenLibrasPTB');
   localStorage.removeItem('user');
+  window.location.href= "http://localhost:3000/login"
 }
   if (props.logged == true) {
     return (
       <>
         <Header>
           <Link to="/home">Home</Link>
-          <a onClick={removeStorage}>Logout</a>
+          <button onClick={removeStorage}>Logout</button>
         </Header>
       </>
     );

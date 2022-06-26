@@ -42,11 +42,9 @@ function FormOrdenarFrase() {
       const response = await axios.post("http://localhost:3001/imagem", fd);
       const midia = "https://drive.google.com/uc?id=" + response.data;
       axios
-        .post("http://localhost:3001/questaoDigitarMidia", {
-          token,
+        .post("http://localhost:3001/questaoOrdenarFrase", {
           resposta: fraseQuestao,
-          midia,
-          categoria: categoriaQuestao,
+          
         })
         .then((response) => {
           alert(response);
@@ -79,9 +77,30 @@ function FormOrdenarFrase() {
     };
     getCategorias();
   }, []);
+  let header;
+  const [isLoggedIn, setIsLoggedIn]= useState()
+  useEffect(() => {
+    let token = localStorage.getItem('tokenLibrasPTB');
+    const getLogin = async () => {
+      const response = await axios.get(
+        "http://localhost:3001/login", { params: { token } }
+      );
+      setIsLoggedIn(response.data.msg);
+    console.log(isLoggedIn)
+    };
+    getLogin();
+  }, []);
+  if (isLoggedIn === 'loggedIn') {
+   header = <HeaderOne logged={true}></HeaderOne>
+    } else {
+  header = <HeaderOne logged={false}></HeaderOne>
+    }
+
+if(isLoggedIn=='loggedIn'){
+
   return (
     <>
-      <HeaderOne logged={true} />
+     {header}
       <Title fontSize={2.5} color={"#000000"}>
         Ordenar frase
       </Title>
@@ -204,6 +223,9 @@ function FormOrdenarFrase() {
       </Modal>
     </>
   );
+      } else{
+        return(<div>{header}<p>Faça login primeiro!</p></div>)
+      }
 }
 
 export default FormOrdenarFrase;

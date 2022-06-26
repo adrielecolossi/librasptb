@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { unmountComponentAtNode, render } from "react-dom";
 import HeaderOne from "../header/index.js";
 import { BackBanner } from "./styles";
@@ -23,7 +23,7 @@ function Login() {
           token = response.data.token;
           let emailLogado = response.data.email;
           console.log(token);
-          localStorage.setItem("token", token);
+          localStorage.setItem("tokenLibrasPTB", token);
           localStorage.setItem("user", emailLogado);
           alert("Autenticado");
           window.location.href = 'http://localhost:3000/home';
@@ -34,9 +34,28 @@ function Login() {
         }
       );
   };
+let header;
+  const [isLoggedIn, setIsLoggedIn]= useState()
+
+  useEffect(() => {
+    let token = localStorage.getItem('tokenLibrasPTB');
+    const getLogin = async () => {
+      const response = await axios.get(
+        "http://localhost:3001/login", { params: { token } }
+      );
+      setIsLoggedIn(response.data.msg);
+    console.log(isLoggedIn)
+    };
+    getLogin();
+  }, []);
+  if (isLoggedIn === 'loggedIn') {
+   header = <HeaderOne logged={true}></HeaderOne>
+    } else {
+  header = <HeaderOne logged={false}></HeaderOne>
+    }
   return (
     <>
-      <HeaderOne />
+      {header}
       <BackBanner>
         <LoginForm>
           <input

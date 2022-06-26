@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import HeaderOne from "../header/index.js";
+import axios, { post } from "axios";
 import { DivInputForm, Title, DivSelect } from "./styles.js";
 import ButtonJS from "../components/Input/Button/index.js";
 import InputJS from "../components/Input/index.js";
@@ -12,6 +13,26 @@ function FormDigitarLacuna() {
       name: "Biologia",
     }
   ]
+  let header;
+  const [isLoggedIn, setIsLoggedIn]= useState()
+  useEffect(() => {
+    let token = localStorage.getItem('tokenLibrasPTB');
+    const getLogin = async () => {
+      const response = await axios.get(
+        "http://localhost:3001/login", { params: { token } }
+      );
+      setIsLoggedIn(response.data.msg);
+    console.log(isLoggedIn)
+    };
+    getLogin();
+  }, []);
+  if (isLoggedIn === 'loggedIn') {
+   header = <HeaderOne logged={true}></HeaderOne>
+    } else {
+  header = <HeaderOne logged={false}></HeaderOne>
+    }
+
+if(isLoggedIn=='loggedIn'){
   return (
     <>
       <HeaderOne logged={true}></HeaderOne>
@@ -71,6 +92,9 @@ function FormDigitarLacuna() {
           />
       </DivInputForm>
     </>
-  );
+  ); }else{
+    return(<div>{header}<p>Faça login primeiro</p></div>)
+  }
+
 }
 export default FormDigitarLacuna;

@@ -118,6 +118,24 @@ router.post("/login", async function (req, res, next) {
     return res.status(400).json({ msg: erro })
   }
 })
+
+router.get("/login", async function(req,res){
+  const tokenRecebido= req.query.token;
+  console.log(tokenRecebido)
+  let decodedToken;
+  try {
+    decodedToken = jwt.verify(tokenRecebido, 'somesupersecretsecret');
+    console.log('isLoggedIn')
+    return res.json({ msg: 'loggedIn' })
+    
+  } catch (err) {
+    err.statusCode = 500;
+    console.log('isNotLoggedIn')
+    console.log(err)
+    return res.json({ msg: 'notLoggedIn' })
+   
+  }
+})
 router.post("/loginApp", async function (req, res, next) {
   const email = req.body.email
   const senha = req.body.senha

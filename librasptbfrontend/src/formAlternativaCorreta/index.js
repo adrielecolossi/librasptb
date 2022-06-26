@@ -3,19 +3,119 @@ import HeaderOne from "../header/index.js";
 import { DivInputForm, Title, DivSelect} from "./styles.js";
 import ButtonJS from "../components/Input/Button/index.js";
 import InputJS from "../components/Input/index.js";
-
+import { useState, useEffect } from "react";
+import axios, { post } from "axios";
 function FormAlternativaVideo() {
-  const categorias = [
-    {
-      name: "Matemática",
-    },
-    {
-      name: "Biologia",
+  let token = localStorage.getItem('tokenLibrasPTB');
+  const criaCategoria = async (e) => {
+    e.preventDefault();
+    if (nomeCategoria === undefined || imagemCategoria === undefined) {
+      alert("Dados incompletos");
+    } else {
+      const fd = new FormData();
+      fd.append("file", imagemCategoria);
+      const response = await axios.post("http://localhost:3001/imagem", fd);
+      const midia = "https://drive.google.com/uc?id=" + response.data;
+      axios
+        .post("http://localhost:3001/categoria", {
+          nome: nomeCategoria,
+          midia,
+        })
+        .then((response) => {
+          alert(response);
+          setIsOpen(false);
+        })
+        .catch((error) => {
+          alert(error);
+            setIsOpen(false);
+        });
+    
     }
-  ]
+  };
+  const criaQuestao = async (e) => {
+    e.preventDefault();
+    if (categoriaQuestao === undefined || palavraQuestao === undefined || imagemQuestao === undefined) {
+      alert('Dados incompletos')
+    } else {
+      const fd = new FormData();
+      fd.append("file", imagemQuestao);
+      const response = await axios.post("http://localhost:3001/imagem", fd);
+      const midia = "https://drive.google.com/uc?id=" + response.data;
+      axios
+        .post("http://localhost:3001/questaoDigitarMidia", {
+          token,
+          resposta: palavraQuestao,
+          midia,
+          categoria: categoriaQuestao
+
+          /*
+
+          CREATE TABLE marcar(
+       questao INTEGER NOT NULL,
+      opcao1 varchar(70), --é a opção correta
+      opcao2 varchar(70),
+      opcao3 varchar(70),
+      opcao4 varchar(70),
+      opcao5 varchar(70),
+      FOREIGN KEY (questao) REFERENCES questao(id)
+);*/
+        })
+        .then((response) => {
+          alert(response.data.msg);
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    }
+  };
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+  function openModal() {
+    setIsOpen(true);
+  }
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  const [categorias, setCategorias] = useState([]);
+  const [nomeCategoria, setNomeCategoria] = useState();
+  const [imagemCategoria, setImagemCategoria] = useState();
+  const [imagemQuestao, setImagemQuestao] = useState();
+  const [palavraQuestao, setPalavraQuestao] = useState();
+  const [categoriaQuestao, setCategoriaQuestao] = useState(1);
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    const getCategorias = async () => {
+      const categoriasDoBanco = await axios.get(
+        "http://localhost:3001/categoria"
+      );
+      setCategorias(categoriasDoBanco.data);
+    };
+    getCategorias();
+  }, []);
+  let header;
+  const [isLoggedIn, setIsLoggedIn]= useState()
+  useEffect(() => {
+    let token = localStorage.getItem('tokenLibrasPTB');
+    const getLogin = async () => {
+      const response = await axios.get(
+        "http://localhost:3001/login", { params: { token } }
+      );
+      setIsLoggedIn(response.data.msg);
+    console.log(isLoggedIn)
+    };
+    getLogin();
+  }, []);
+  if (isLoggedIn === 'loggedIn') {
+   header = <HeaderOne logged={true}></HeaderOne>
+    } else {
+  header = <HeaderOne logged={false}></HeaderOne>
+    }
+
+if(isLoggedIn=='loggedIn'){
   return (
     <>
-      <HeaderOne logged={true}></HeaderOne>
+      {header}
       <Title fontSize={2.5} color={"#000000"}>
         Marcar alternativa da palavra do vídeo
       </Title>
@@ -38,7 +138,7 @@ function FormAlternativaVideo() {
             })}
             </select>
           <ButtonJS
-            onClick={""}
+            onClick={criaCategoria}
             backgroundColor={"#8ECAE6"}
             color={"#000000"}
             borderRadius={0}
@@ -106,6 +206,8 @@ function FormAlternativaVideo() {
         />
       </DivInputForm>
     </>
-  );
+  );}else{
+    return(<div>{header}<p>Faça login primeiro</p></div>)
+  }
 }
 export default FormAlternativaVideo;

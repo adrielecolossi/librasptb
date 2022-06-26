@@ -5,7 +5,7 @@ import axios, { post } from "axios";
 import Modal from "react-modal";
 import ButtonJS from "../components/Input/Button/index.js"
 import InputJS from "../components/Input/index.js"
-const token = localStorage.getItem("token");
+const token = localStorage.getItem("tokenLibrasPTB");
 
 function FormDigitarPalavra() {
   const criaCategoria = async (e) => {
@@ -80,10 +80,29 @@ function FormDigitarPalavra() {
     };
     getCategorias();
   }, []);
+  let header;
+  const [isLoggedIn, setIsLoggedIn]= useState()
+  useEffect(() => {
+    let token = localStorage.getItem('tokenLibrasPTB');
+    const getLogin = async () => {
+      const response = await axios.get(
+        "http://localhost:3001/login", { params: { token } }
+      );
+      setIsLoggedIn(response.data.msg);
+    console.log(isLoggedIn)
+    };
+    getLogin();
+  }, []);
+  if (isLoggedIn === 'loggedIn') {
+   header = <HeaderOne logged={true}></HeaderOne>
+    } else {
+  header = <HeaderOne logged={false}></HeaderOne>
+    }
 
+if(isLoggedIn=='loggedIn'){
   return (
     <>
-      <HeaderOne logged={true} />
+    {header}
       <Title fontSize={2.5} color={"#000000"}>
         Digitar palavra da imagem/vídeo
       </Title>
@@ -213,6 +232,10 @@ function FormDigitarPalavra() {
       </Modal>
     </>
   );
+      }else{
+        return(<div>{header}<p>Faça login primeiro</p></div>)
+      }
+
 }
 
 export default FormDigitarPalavra;

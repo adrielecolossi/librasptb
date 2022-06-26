@@ -1,8 +1,8 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import HeaderOne from "../header/index.js";
 import { Banner, BannerCards, Title } from "./styles";
 import Card from "../components/Input/Card";
-
+import axios from "axios";
 function SplashScreen() {
   const cardsContent = [
     {
@@ -50,11 +50,23 @@ function SplashScreen() {
     },
   ];
   let header;
-let isLoggedIn = localStorage.hasOwnProperty('token')
-  if (isLoggedIn !== true) {
- header = <HeaderOne logged={false}></HeaderOne>
+  const [isLoggedIn, setIsLoggedIn]= useState()
+
+useEffect(() => {
+  let token = localStorage.getItem('tokenLibrasPTB');
+  const getLogin = async () => {
+    const response = await axios.get(
+      "http://localhost:3001/login", { params: { token } }
+    );
+    setIsLoggedIn(response.data.msg);
+  console.log(isLoggedIn)
+  };
+  getLogin();
+}, []);
+if (isLoggedIn === 'loggedIn') {
+ header = <HeaderOne logged={true}></HeaderOne>
   } else {
-header = <HeaderOne logged={true}></HeaderOne>
+header = <HeaderOne logged={false}></HeaderOne>
   }
   return (
     <>
