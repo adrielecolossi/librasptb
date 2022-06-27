@@ -64,6 +64,51 @@ exports.saveQuestaoOrdenarFrase = async function (questao) {
 
   return result4;
 };
+
+exports.saveQuestaoFraseCorreta = async function (questao) {
+  /*
+CREATE TABLE frasecorreta(
+       questao INTEGER NOT NULL,
+      opcao1 varchar(300),
+      opcao2 varchar(300),
+      opcao3 varchar(300),
+      opcao4 varchar(300),
+      opcao5 varchar(300),
+      FOREIGN KEY (questao) REFERENCES questao(id)
+)
+*/
+console.log(questao)
+  result = await db.query(
+    "insert into questao (id) values((select count(*)+1 from questao)) RETURNING id;"
+  );
+ 
+  result3 = await db.query(
+    "insert into frasecorreta(questao, opcao1, opcao2, opcao3, opcao4, opcao5) values ('" +
+      result.rows[0].id +
+      "','" +
+      questao.alternativaCerta +
+      "','" +
+      questao.alternativaErrada1 +
+      "','" +
+      questao.alternativaErrada2 +
+      "','" +
+      questao.alternativaErrada3 +
+      "','" +
+      questao.alternativaErrada4 +
+      "');"
+  );
+
+  result4 = await db.query(
+    "insert into questaocategoria(questao, categoria) values ('" +
+      result.rows[0].id +
+      "','" +
+      questao.categoria +
+      "')"
+  );
+
+  return result4;
+};
+
 exports.saveQuestaoMarcarLacuna = async function (questao) {
   result = await db.query(
     "insert into questao (id) values((select count(*)+1 from questao)) RETURNING id;"
@@ -113,6 +158,58 @@ exports.saveQuestaoMarcarLacuna = async function (questao) {
 };
 
 
+exports.saveQuestaoMarcarMidia = async function (questao) {
+  result = await db.query(
+    "insert into questao (id) values((select count(*)+1 from questao)) RETURNING id;"
+  );
+
+  /*
+ CREATE TABLE marcar(
+       questao INTEGER NOT NULL,
+      opcao1 varchar(70), --é a opção correta
+      opcao2 varchar(70),
+      opcao3 varchar(70),
+      opcao4 varchar(70),
+      opcao5 varchar(70),
+      FOREIGN KEY (questao) REFERENCES questao(id)
+);
+*/
+  result3 = await db.query(
+    "insert into marcar(questao, opcao1, opcao2, opcao3, opcao4, opcao5) values ('" +
+      result.rows[0].id +
+      "','" +
+      questao.alternativaCerta +
+      "','" +
+      questao.alternativaErrada1 +
+      "','" +
+      questao.alternativaErrada2 +
+      "','" +
+      questao.alternativaErrada3 +
+      "','" +
+      questao.alternativaErrada4 +
+      "')"
+  );
+  result2 = await db.query(
+    "insert into midia(url) values ('" + questao.midia + "') RETURNING id; "
+  );
+  result5 = await db.query(
+    "insert into questaomidia(questao, midia) values ('" +
+      result.rows[0].id +
+      "', '" +
+      result2.rows[0].id +
+      "');"
+  );
+  result4 = await db.query(
+    "insert into questaocategoria(questao, categoria) values ('" +
+      result.rows[0].id +
+      "','" +
+      questao.categoria +
+      "')"
+  );
+
+  return result4;
+};
+
 /*
 http://localhost:3001/questaoDigitarLacuna", {
           token,
@@ -141,6 +238,50 @@ exports.saveQuestaoDigitarLacuna = async function (questao) {
       questao.resposta +
       "');"
   );
+  result4 = await db.query(
+    "insert into questaocategoria(questao, categoria) values ('" +
+      result.rows[0].id +
+      "','" +
+      questao.categoria +
+      "')"
+  );
+
+  return result4;
+};
+
+exports.saveQuestaoAssociarColunas = async function (questao) {
+  result = await db.query(
+    "insert into questao (id) values((select count(*)+1 from questao)) RETURNING id;"
+  );
+
+
+
+  result3 = await db.query(
+    "insert into associar(questao, opcao1, opcao2, opcao3, opcao4, opcao5, opcao6, opcao7, opcao8, opcao9, opcao10) values ('" +
+      result.rows[0].id +
+      "','" +
+      questao.opcao1 +
+      "','" +
+      questao.opcao2 +
+      "','" +
+      questao.opcao3 +
+      "','" +
+      questao.opcao4 +
+      "','" +
+      questao.opcao5 +
+       "','" +
+      questao.opcao6 +
+      "','" +
+      questao.opcao7 +
+      "','" +
+      questao.opcao8 +
+      "','" +
+      questao.opcao9 +
+      "','" +
+      questao.opcao10 +
+      "');"
+  );
+
   result4 = await db.query(
     "insert into questaocategoria(questao, categoria) values ('" +
       result.rows[0].id +

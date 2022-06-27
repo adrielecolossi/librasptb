@@ -8,7 +8,7 @@ import Form2 from "./form/formimg.js";
 import Contato from "./contato/contato.js";
 import FormDigitarPalavra from "./formDigitarPalavra/index.js";
 import FormAlternativaCorreta from "./formAlternativaCorreta/index.js";
-import FormAlternativaFraseCorreta from "./formAlternativaFraseCorreta/index.js";
+import FormFraseCorreta from "./formFraseCorreta/index.js";
 import FormOrdenarFrase from "./formOrdenarFrase/index.js";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Footer from "./footer";
@@ -59,7 +59,7 @@ function App() {
             path="/FormAlternativaFraseCorreta"
             exact
             strict
-            component={FormAlternativaFraseCorreta}
+            component={FormFraseCorreta}
           ></Route>
           <Route path="/" component={splashScreen}></Route>
         </Switch>

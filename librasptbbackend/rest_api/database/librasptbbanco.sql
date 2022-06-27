@@ -53,16 +53,16 @@ CREATE TABLE marcar(
 
 CREATE TABLE associar(
        questao INTEGER NOT NULL,
-      opcao1 varchar(70),
-      opcao2 varchar(70),
-      opcao3 varchar(70),
-      opcao4 varchar(70),
-      opcao5 varchar(70),
-      opcao6 varchar(70), --são urls
-      opcao7 varchar(70),
-      opcao8 varchar(70),
-	opcao9 varchar(70),
-      opcao10 varchar(70),
+      opcao1 varchar(700),
+      opcao2 varchar(700),
+      opcao3 varchar(700),
+      opcao4 varchar(700),
+      opcao5 varchar(700),
+      opcao6 varchar(700), --são urls
+      opcao7 varchar(700),
+      opcao8 varchar(700),
+	opcao9 varchar(700),
+      opcao10 varchar(700),
        FOREIGN KEY (questao) REFERENCES questao(id)
 );
 
@@ -83,6 +83,17 @@ CREATE TABLE preencheralternativa(
       opcao5 varchar(70),
       FOREIGN KEY (questao) REFERENCES questao(id)
 ) 
+
+CREATE TABLE frasecorreta(
+       questao INTEGER NOT NULL,
+      opcao1 varchar(300),
+      opcao2 varchar(300),
+      opcao3 varchar(300),
+      opcao4 varchar(300),
+      opcao5 varchar(300),
+      FOREIGN KEY (questao) REFERENCES questao(id)
+) 
+
 
 CREATE TABLE digitarmidia(
       questao INTEGER NOT NULL,

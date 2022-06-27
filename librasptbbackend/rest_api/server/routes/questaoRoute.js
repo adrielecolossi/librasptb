@@ -74,6 +74,60 @@ router.post('/questaoDigitarLacuna', async function (req, res) {
   }
 })
 
+router.post('/questaoFraseCorreta', async function (req, res) {
+  const tokenRecebido = req.body.token
+  let questao = req.body;
+  let decodedToken;
+  try {
+    decodedToken = jwt.verify(tokenRecebido, 'somesupersecretsecret');
+  } catch (err) {
+    err.statusCode = 500;
+    return res.json({ msg: 'Falha ao cadastrar uma questão. Faça primeiro o login.' })
+  }
+  if (decodedToken) {
+    const newQuestao = await questaoService.saveQuestaoFraseCorreta(questao);
+    return res.json({ msg: 'Sucesso ao cadastrar uma questão' });
+  } else {
+    return res.json({ msg: 'Falha ao cadastrar uma questão. Faça primeiro o login.' });
+  }
+})
+
+router.post('/questaoAssociarColunas', async function (req, res) {
+  const tokenRecebido = req.body.token
+  let questao = req.body;
+  console.log(questao)
+  let decodedToken;
+  try {
+    decodedToken = jwt.verify(tokenRecebido, 'somesupersecretsecret');
+  } catch (err) {
+    err.statusCode = 500;
+    return res.json({ msg: 'Falha ao cadastrar uma questão. Faça primeiro o login.' })
+  }
+  if (decodedToken) {
+    const newQuestao = await questaoService.saveQuestaoAssociarColunas(questao);
+    return res.json({ msg: 'Sucesso ao cadastrar uma questão' });
+  } else {
+    return res.json({ msg: 'Falha ao cadastrar uma questão. Faça primeiro o login.' });
+  }
+})
+
+router.post('/questaoMarcarMidia', async function (req, res) {
+  const tokenRecebido = req.body.token
+  let questao = req.body;
+  let decodedToken;
+  try {
+    decodedToken = jwt.verify(tokenRecebido, 'somesupersecretsecret');
+  } catch (err) {
+    err.statusCode = 500;
+    return res.json({ msg: 'Falha ao cadastrar uma questão. Faça primeiro o login.' })
+  }
+  if (decodedToken) {
+    const newQuestao = await questaoService.saveQuestaoMarcarMidia(questao);
+    return res.json({ msg: 'Sucesso ao cadastrar uma questão' });
+  } else {
+    return res.json({ msg: 'Falha ao cadastrar uma questão. Faça primeiro o login.' });
+  }
+})
 router.post('/questaoMarcarLacuna', async function (req, res) {
   const tokenRecebido = req.body.token
   let questao = req.body;

@@ -28,8 +28,20 @@ exports.saveQuestaoMarcarLacuna= async  function(questao){
     result = await questaoData.saveQuestaoMarcarLacuna(questao);
     return result;
 }
+exports.saveQuestaoAssociarColunas= async  function(questao){
+    result = await questaoData.saveQuestaoAssociarColunas(questao);
+    return result;
+}
+exports.saveQuestaoFraseCorreta= async  function(questao){
+    result = await questaoData.saveQuestaoFraseCorreta(questao);
+    return result;
+}
 exports.saveQuestaoDigitarLacuna= async  function(questao){
     result = await questaoData.saveQuestaoDigitarLacuna(questao);
+    return result;
+}
+exports.saveQuestaoMarcarMidia= async  function(questao){
+    result = await questaoData.saveQuestaoMarcarMidia(questao);
     return result;
 }
 exports.Login = function(req, res, next){
@@ -47,6 +59,7 @@ exports.getUser = function(email){
 exports.cadastrarUsuario = function(email,nome,genero, datadenascimento, senha){
     return questaoData.cadastrarUsuario(email,nome,genero, datadenascimento, senha);
 }
+
 exports.saveCategoria = function(categoria){
     return categoriaData.saveCategoria(categoria);
 }
