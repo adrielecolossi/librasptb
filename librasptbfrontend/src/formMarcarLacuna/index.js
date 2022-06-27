@@ -1,19 +1,93 @@
 import React, {useEffect, useState} from "react";
-
+import Modal from "react-modal";
 import axios from "axios";
 import HeaderOne from "../header/index.js";
-import { DivInputForm, Title, DivSelect} from "./styles.js";
-import ButtonJS from "../components/Input/Button/index.js";
+import { DivInputForm,DivSelectAndButton, Title, DivSelect, DivButtonCategories} from "./styles.js";
+import ButtonJS from "../components/Button/index.js";
 import InputJS from "../components/Input/index.js"
 function FormMarcarLacuna() {
-  const categorias = [
-    {
-      name: "Matemática",
-    },
-    {
-      name: "Biologia",
+
+  const criaCategoria = async (e) => {
+    e.preventDefault();
+    if (nomeCategoria === undefined || imagemCategoria === undefined) {
+      alert("Dados incompletos");
+    } else {
+      const fd = new FormData();
+      fd.append("file", imagemCategoria);
+      const response = await axios.post("http://localhost:3001/imagem", fd);
+      const midia = "https://drive.google.com/uc?id=" + response.data;
+      axios
+        .post("http://localhost:3001/categoria", {
+          nome: nomeCategoria,
+          midia,
+        })
+        .then((response) => {
+          alert(response);
+        })
+        .catch((error) => {
+          alert(error);
+        });
+
+      setIsOpen(false);
     }
-  ]
+  };
+  let token = localStorage.getItem('tokenLibrasPTB');
+  const criaQuestao = async (e) => {
+    e.preventDefault();
+    if (categoriaQuestao === undefined || fraseQuestao == undefined || alternativaCerta===undefined || alternativaErrada1===undefined || alternativaErrada2===undefined || alternativaErrada3===undefined || alternativaErrada4===undefined) {
+      alert("Dados incompletos");
+      console.log(categoriaQuestao,alternativaCerta)
+    } else {
+    axios
+        .post("http://localhost:3001/questaoMarcarLacuna", {
+          token,
+          frase: fraseQuestao,
+          categoria: categoriaQuestao,
+          alternativaCerta,
+          alternativaErrada1,
+          alternativaErrada2,
+          alternativaErrada3,
+          alternativaErrada4
+        })
+        .then((response) => {
+          alert(response.data.msg);
+        })
+        .catch((error) => {
+          alert(error);
+        });
+      
+    }
+  };
+  const [categorias, setCategorias] = useState([]);
+
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+  function openModal() {
+    setIsOpen(true);
+  }
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+
+  const [nomeCategoria, setNomeCategoria] = useState();
+  const [imagemCategoria, setImagemCategoria] = useState();
+  const [fraseQuestao, setFraseQuestao] = useState();
+  const [alternativaCerta, setAlternativaCerta] = useState();
+  const [alternativaErrada1, setAlternativaErrada1] = useState(); 
+  const [alternativaErrada2, setAlternativaErrada2] = useState();
+  const [alternativaErrada3, setAlternativaErrada3] = useState();
+  const [alternativaErrada4, setAlternativaErrada4] = useState();   
+  const [categoriaQuestao, setCategoriaQuestao] = useState(1);
+
+  useEffect(() => {
+    const getCategorias = async () => {
+      const categoriasDoBanco = await axios.get(
+        "http://localhost:3001/categoria"
+      );
+      setCategorias(categoriasDoBanco.data);
+    };
+    getCategorias();
+  }, []);
   let header;
   const [isLoggedIn, setIsLoggedIn]= useState()
   useEffect(() => {
@@ -23,7 +97,7 @@ function FormMarcarLacuna() {
         "http://localhost:3001/login", { params: { token } }
       );
       setIsLoggedIn(response.data.msg);
-    console.log(isLoggedIn)
+  
     };
     getLogin();
   }, []);
@@ -33,7 +107,8 @@ function FormMarcarLacuna() {
   header = <HeaderOne logged={false}></HeaderOne>
     }
 
-if(isLoggedIn=='loggedIn'){
+
+if(isLoggedIn==='loggedIn'){
 
   return (
     <>
@@ -44,13 +119,14 @@ if(isLoggedIn=='loggedIn'){
       <Title fontSize={1} color={"#7A7A7A"}>
         Modelo em que se marca uma alternativa para preencher frase
       </Title>
-
+<DivSelectAndButton>
       <DivInputForm>
         <DivSelect>
           <label for="categoria">Categoria</label>
           <select
             id="categoria"
             style={{ marginLeft: "5%" }}
+            onChange={(v) => setCategoriaQuestao(v.target.value)}
           >
             {categorias.map((categoria) => {
               return (
@@ -60,74 +136,164 @@ if(isLoggedIn=='loggedIn'){
               );
             })}
           </select>
-          <ButtonJS
-            onClick={""}
-            backgroundColor={"#8ECAE6"}
-            color={"#000000"}
-            borderRadius={0}
-            name={"Criar Categoria"}
-          />
+
+         
         </DivSelect>
       </DivInputForm>
+      <DivButtonCategories><ButtonJS
+              onClick={openModal}
+              backgroundColor={"#8ECAE6"}
+              color={"#000000"}
+              borderRadius={0}
+              name={"Criar Categoria"}
+            /> 
+            </DivButtonCategories>
+      </DivSelectAndButton>
       <DivInputForm>
         <div>
           <label for="frase">Frase</label>
-          <InputJS name="frase" type="text" color={"rgba(142, 202, 230, 0.5)"}></InputJS>
+          <InputJS
+                id="inputfrase"
+                type="text"
+                name="frase"
+                color={"rgba(142, 202, 230, 0.5)"}
+                onChange={(v) => setFraseQuestao(v.target.value)}
+                value={fraseQuestao}
+              />
         </div>
         <br />
         <div>
           <label for="correct">Alternativa Correta</label>
-          <InputJS
-            name="correct"
-            type="text"
-            color={"rgba(144, 230, 142, 0.5)"}
-          ></InputJS>
+  
+           <InputJS
+                id="inputfrase"
+                type="text"
+                name="correct"
+                color={"rgba(144, 230, 142, 0.5)"}
+                onChange={(v) => setAlternativaCerta(v.target.value)}
+                value={alternativaCerta}
+              />
         </div>
         <br />
         <div>
           <label for="wrong1">Alternativa Errada</label>
-          <InputJS
-            name="wrong1"
-            type="text"
-            color={"rgba(252, 65, 65, 0.5)"}
-          ></InputJS>
+           <InputJS
+                id="inputfrase"
+                type="text"
+                name="wrong1"
+                color={"rgba(252, 65, 65, 0.5)"}
+                onChange={(v) => setAlternativaErrada1(v.target.value)}
+                value={alternativaErrada1}
+              />
         </div>
         <br />
         <div>
           <label for="wrong2">Alternativa Errada</label>
           <InputJS
-            name="wrong2"
-            type="text"
-            color={"rgba(252, 65, 65, 0.5)"}
-          ></InputJS>
+                id="inputfrase"
+                type="text"
+                name="wrong2"
+                color={"rgba(252, 65, 65, 0.5)"}
+                onChange={(v) => setAlternativaErrada2(v.target.value)}
+                value={alternativaErrada2}
+              />
         </div>
         <br />
         <div>
           <label for="wrong3">Alternativa Errada</label>
           <InputJS
-            name="wrong3"
-            type="text"
-            color={"rgba(252, 65, 65, 0.5)"}
-          ></InputJS>
+                id="inputfrase"
+                type="text"
+                name="wrong3"
+                color={"rgba(252, 65, 65, 0.5)"}
+                onChange={(v) => setAlternativaErrada3(v.target.value)}
+                value={alternativaErrada3}
+              />
         </div>
         <br />
         <div>
           <label for="wrong4">Alternativa Errada</label>
           <InputJS
-            name="wrong4"
-            type="text"
-            color={"rgba(252, 65, 65, 0.5)"}
-          ></InputJS>
+                id="inputfrase"
+                type="text"
+                name="wrong4"
+                color={"rgba(252, 65, 65, 0.5)"}
+                onChange={(v) => setAlternativaErrada4(v.target.value)}
+                value={alternativaErrada4}
+              />
         </div>
         <br />
         <ButtonJS
-          onClick={""}
+          onClick={criaQuestao}
           backgroundColor={"#219EBC"}
           color={"#FFFF"}
           borderRadius={0}
           name={"Criar Questão"}
         />
       </DivInputForm>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Example Modal"
+        style={{
+          overlay: {
+            backgroundColor: "#000;",
+            display: "flex",
+            flexDirection: "column",
+          },
+          content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            backgroundColor: "#000;",
+            transform: "translate(-50%, -50%)",
+            display: "flex",
+            flexDirection: "column",
+          },
+        }}
+      >
+        <h1>Criar Categoria</h1>
+        <form enctype="multipart/form-data" method="POST">
+          <label for="nome">Nome da categoria:</label>
+          <br></br>
+          <InputJS
+            type="text"
+            name="nomeCategoria"
+            onChange={(v) => setNomeCategoria(v.target.value)}
+            value={nomeCategoria}
+            color={"#EDEDEDED"}
+            style={{ marginTop: "5%" }}
+          />
+          <br></br>
+          <br></br>
+          <label for="url">Logo da categoria:</label>
+          <br></br>
+          <InputJS
+            type="file"
+            name="url"
+            style={{ marginTop: "3%", marginBottom: "5%" }}
+            onChange={(v) => setImagemCategoria(v.target.files[0])}
+          ></InputJS>
+          <br></br>
+          <br></br>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <ButtonJS
+              onClick={criaCategoria}
+              backgroundColor={"rgba(142, 202, 230, 0.5)"}
+              borderRadius={"20px"}
+              name={"Criar"}
+            />
+            <ButtonJS
+              onClick={closeModal}
+              backgroundColor={"rgba(229, 116, 116, 0.5)"}
+              borderRadius={"20px"}
+              name={"Cancelar"}
+            />
+          </div>
+        </form>
+      </Modal>
     </>
   );
           } else{

@@ -3,7 +3,7 @@ import { Title, DivForm, DivInput, DivSelect, Div } from "./styles";
 import HeaderOne from "../header/index.js";
 import axios from "axios";
 import Modal from "react-modal";
-import ButtonJS from "../components/Input/Button/index.js"
+import ButtonJS from "../components/Button/index.js"
 import InputJS from "../components/Input/index.js"
 const token = localStorage.getItem("token");
 
@@ -32,19 +32,18 @@ function FormOrdenarFrase() {
       setIsOpen(false);
     }
   };
+  let token = localStorage.getItem('tokenLibrasPTB');
   const criaQuestao = async (e) => {
     e.preventDefault();
     if (categoriaQuestao === undefined || fraseQuestao === undefined) {
       alert("Dados incompletos");
+      console.log(categoriaQuestao, fraseQuestao)
     } else {
-      const fd = new FormData();
-      fd.append("file", imagemCategoria);
-      const response = await axios.post("http://localhost:3001/imagem", fd);
-      const midia = "https://drive.google.com/uc?id=" + response.data;
       axios
         .post("http://localhost:3001/questaoOrdenarFrase", {
+          token,
           resposta: fraseQuestao,
-          
+          categoria: categoriaQuestao
         })
         .then((response) => {
           alert(response);
@@ -66,7 +65,7 @@ function FormOrdenarFrase() {
   const [nomeCategoria, setNomeCategoria] = useState();
   const [imagemCategoria, setImagemCategoria] = useState();
   const [fraseQuestao, setFraseQuestao] = useState();
-  const [categoriaQuestao, setCategoriaQuestao] = useState();
+  const [categoriaQuestao, setCategoriaQuestao] = useState(1);
 
   useEffect(() => {
     const getCategorias = async () => {
@@ -191,8 +190,10 @@ if(isLoggedIn=='loggedIn'){
             name="nomeCategoria"
             onChange={(v) => setNomeCategoria(v.target.value)}
             value={nomeCategoria}
+            color={"#EDEDEDED"}
             style={{ marginTop: "5%" }}
           />
+      
           <br></br>
           <br></br>
           <label for="url">Logo da categoria:</label>

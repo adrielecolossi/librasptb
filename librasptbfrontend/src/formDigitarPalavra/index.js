@@ -3,7 +3,7 @@ import { Title, Button, DivForm, DivInput, DivSelect, Div } from "./styles";
 import HeaderOne from "../header/index.js";
 import axios, { post } from "axios";
 import Modal from "react-modal";
-import ButtonJS from "../components/Input/Button/index.js"
+import ButtonJS from "../components/Button/index.js"
 import InputJS from "../components/Input/index.js"
 const token = localStorage.getItem("tokenLibrasPTB");
 
@@ -23,7 +23,7 @@ function FormDigitarPalavra() {
           midia,
         })
         .then((response) => {
-          alert(response);
+          alert('Categoria criada com sucesso');
         })
         .catch((error) => {
           alert(error);
@@ -34,6 +34,7 @@ function FormDigitarPalavra() {
   const criaQuestao = async (e) => {
     e.preventDefault();
     if (categoriaQuestao === undefined || palavraQuestao === undefined || imagemQuestao === undefined) {
+      console.log(categoriaQuestao, palavraQuestao, imagemQuestao)
       alert('Dados incompletos')
     } else {
       const fd = new FormData();
@@ -48,7 +49,7 @@ function FormDigitarPalavra() {
           categoria: categoriaQuestao
         })
         .then((response) => {
-          alert(response.data.msg);
+          alert('Questao criada com sucesso');
         })
         .catch((error) => {
           alert(error);
@@ -70,7 +71,7 @@ function FormDigitarPalavra() {
   const [palavraQuestao, setPalavraQuestao] = useState();
   const [categoriaQuestao, setCategoriaQuestao] = useState(1);
   const [showModal, setShowModal] = useState(false);
-
+  
   useEffect(() => {
     const getCategorias = async () => {
       const categoriasDoBanco = await axios.get(
@@ -130,22 +131,23 @@ if(isLoggedIn=='loggedIn'){
             </DivSelect>
             <DivInput>
               <label for="inputimg">Imagem/GIF </label>
-              <InputJS
-                id="inputimg"
-                type="file"
-                name="url"
-                onChange={(v) => setImagemQuestao(v.target.files[0])}
-              ></InputJS>
+              <input
+            type="file"
+            name="url"
+           
+           // style={{ marginTop: "3%", marginBottom: "5%" }}
+            onChange={(v) => setImagemQuestao(v.target.files[0])}
+          />
             </DivInput>
             <DivInput>
               <label for="inputpalavra">Palavra </label>
-              <InputJS
+              <input
                 id="inputpalavra"
                 type="text"
+                value={palavraQuestao}
                 name="palavraQuestao"
                 onChange={(v) => setPalavraQuestao(v.target.value)}
-                value={palavraQuestao}
-              />
+                />
             </DivInput>
             <ButtonJS
               onClick={criaQuestao}
@@ -200,6 +202,7 @@ if(isLoggedIn=='loggedIn'){
             name="nomeCategoria"
             onChange={(v) => setNomeCategoria(v.target.value)}
             value={nomeCategoria}
+            color={"#EDEDEDED"}
             style={{ marginTop: "5%" }}
           />
           <br></br>
@@ -209,9 +212,10 @@ if(isLoggedIn=='loggedIn'){
           <InputJS
             type="file"
             name="url"
-            style={{ marginTop: "3%", marginBottom: "5%" }}
+            //value={imagemCategoria}
+           // style={{ marginTop: "3%", marginBottom: "5%" }}
             onChange={(v) => setImagemCategoria(v.target.files[0])}
-          ></InputJS>
+          />
           <br></br>
           <br></br>
           <div style={{ display: "flex", flexDirection: "column" }}>

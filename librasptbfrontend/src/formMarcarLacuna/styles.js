@@ -40,12 +40,18 @@ export const Input = styled.input`
   margin: 2px 2px 2px 2px;
   cursor: pointer;
 `;
+export const DivSelectAndButton = styled.div`
+display: flex;
+justify-content: space-evenly;
+`;
+export const DivButtonCategories = styled.div`
 
+`;
 export const DivSelect = styled.div`
   select {
     padding: 10px;
     font-size: 0.8em;
-    width: 30%;
+    width: 100%;
   }
   select:hover {
     cursor: pointer;

@@ -19,6 +19,19 @@ exports.saveQuestaoDigitarMidia= async  function(questao){
     result = await questaoData.saveQuestaoDigitarMidia(questao);
     return result;
 }
+exports.saveQuestaoOrdenarFrase= async  function(questao){
+    result = await questaoData.saveQuestaoOrdenarFrase(questao);
+    return result;
+}
+
+exports.saveQuestaoMarcarLacuna= async  function(questao){
+    result = await questaoData.saveQuestaoMarcarLacuna(questao);
+    return result;
+}
+exports.saveQuestaoDigitarLacuna= async  function(questao){
+    result = await questaoData.saveQuestaoDigitarLacuna(questao);
+    return result;
+}
 exports.Login = function(req, res, next){
     return questaoData.Login(req)
 }

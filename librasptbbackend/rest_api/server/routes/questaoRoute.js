@@ -34,6 +34,64 @@ router.get("/questao/:id", async function (req, res) {
     questao
   })
 });
+
+
+router.post('/questaoOrdenarFrase', async function (req, res) {
+  const tokenRecebido = req.body.token
+  let questao = req.body;
+  let decodedToken;
+  try {
+    decodedToken = jwt.verify(tokenRecebido, 'somesupersecretsecret');
+  } catch (err) {
+    err.statusCode = 500;
+    return res.json({ msg: 'Falha ao cadastrar uma questão. Faça primeiro o login.' })
+  }
+  if (decodedToken) {
+    const newQuestao = await questaoService.saveQuestaoOrdenarFrase(questao);
+    return res.json({ msg: 'Sucesso ao cadastrar uma questão' });
+  } else {
+    return res.json({ msg: 'Falha ao cadastrar uma questão. Faça primeiro o login.' });
+  }
+});
+
+
+
+router.post('/questaoDigitarLacuna', async function (req, res) {
+  const tokenRecebido = req.body.token
+  let questao = req.body;
+  let decodedToken;
+  try {
+    decodedToken = jwt.verify(tokenRecebido, 'somesupersecretsecret');
+  } catch (err) {
+    err.statusCode = 500;
+    return res.json({ msg: 'Falha ao cadastrar uma questão. Faça primeiro o login.' })
+  }
+  if (decodedToken) {
+    const newQuestao = await questaoService.saveQuestaoDigitarLacuna(questao);
+    return res.json({ msg: 'Sucesso ao cadastrar uma questão' });
+  } else {
+    return res.json({ msg: 'Falha ao cadastrar uma questão. Faça primeiro o login.' });
+  }
+})
+
+router.post('/questaoMarcarLacuna', async function (req, res) {
+  const tokenRecebido = req.body.token
+  let questao = req.body;
+  let decodedToken;
+  try {
+    decodedToken = jwt.verify(tokenRecebido, 'somesupersecretsecret');
+  } catch (err) {
+    err.statusCode = 500;
+    return res.json({ msg: 'Falha ao cadastrar uma questão. Faça primeiro o login.' })
+  }
+  if (decodedToken) {
+    const newQuestao = await questaoService.saveQuestaoMarcarLacuna(questao);
+    return res.json({ msg: 'Sucesso ao cadastrar uma questão' });
+  } else {
+    return res.json({ msg: 'Falha ao cadastrar uma questão. Faça primeiro o login.' });
+  }
+})
+
 router.post('/questaoDigitarMidia', async function (req, res) {
   const tokenRecebido = req.body.token
   let questao = req.body;

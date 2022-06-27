@@ -3,10 +3,9 @@ import HeaderOne from "../header/index.js";
 import { useState, useEffect } from "react";
 import axios, { post } from "axios";
 import { InputForm, DivInputForm, Title, DivSelect} from "./styles.js";
-import ButtonJS from "../components/Input/Button/index.js";
+import ButtonJS from "../components/Button/index.js";
 import InputJS from "../components/Input/index.js";
-
-const token = localStorage.getItem("token");
+const token = localStorage.getItem("tokenLibrasPTB");
 
 function FormAssociarColunas() {
   const [tipo, setTipo] = useState("");
@@ -72,6 +71,7 @@ function FormAssociarColunas() {
   header = <HeaderOne logged={false}></HeaderOne>
     }
 
+    
 if(isLoggedIn=='loggedIn'){
   return (
     <>

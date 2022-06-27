@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import HeaderOne from "../header/index.js";
 import { Banner, BannerCards, Title } from "./styles";
-import Card from "../components/Input/Card";
+import Card from "../components/Card";
 import axios from "axios";
 function SplashScreen() {
   const cardsContent = [

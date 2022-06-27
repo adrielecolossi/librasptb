@@ -31,7 +31,7 @@ CREATE TABLE ordenar(
 CREATE TABLE completar(
         questao INTEGER NOT NULL,
       frase VARCHAR(300) NOT NULL,
-      opcao1 varchar(70),
+      opcao1 varchar(70), --é sempre a certa
       opcao2 varchar(70),
       opcao3 varchar(70),
       opcao4 varchar(70),
