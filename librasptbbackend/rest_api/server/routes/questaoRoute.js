@@ -114,6 +114,8 @@ router.post('/questaoAssociarColunas', async function (req, res) {
 router.post('/questaoMarcarMidia', async function (req, res) {
   const tokenRecebido = req.body.token
   let questao = req.body;
+  console.log(questao)
+  
   let decodedToken;
   try {
     decodedToken = jwt.verify(tokenRecebido, 'somesupersecretsecret');
@@ -127,6 +129,7 @@ router.post('/questaoMarcarMidia', async function (req, res) {
   } else {
     return res.json({ msg: 'Falha ao cadastrar uma questão. Faça primeiro o login.' });
   }
+
 })
 router.post('/questaoMarcarLacuna', async function (req, res) {
   const tokenRecebido = req.body.token

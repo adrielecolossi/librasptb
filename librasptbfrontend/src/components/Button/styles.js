@@ -5,9 +5,8 @@ export const Button = styled.button`
   color: ${(props) => props.color};
   border-radius: ${(props) => props.borderRadius};
   border: none;
-  padding: 5%;
+  padding: 3%;
   cursor: pointer;
-  margin: 2%;
   &:hover {
     cursor: pointer;
   }

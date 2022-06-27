@@ -34,29 +34,34 @@ export const DivInputForm = styled.form`
 `;
 
 export const DivSelect = styled.div`
-  select {
-    padding: 10px;
-    font-size: 0.8em;
-    width: 30%;
-  }
-  select:hover {
-    cursor: pointer;
-  }
-  button {
-    border: none;
-    font-size: 0.8em;
-    padding: 12px;
-    width: 40%;
-    background-color: rgba(142, 202, 230, 1);
-  }
-  button:hover {
-    cursor: pointer;
-    background-color: rgb(123, 178, 204);
-  }
-  display: flex;
+  flex-wrap: wrap;
   width: 30%;
+  margin: auto;
+  display: flex;
   justify-content: space-between;
+  div{
+    padding: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #categoria {
+    cursor: pointer;
+  }
+   @media only screen and (min-width: 300px) and (max-device-width: 500px) {
+      width: 60%;
+      justify-content: center;
+  }
+  @media only screen and (min-width: 500px) and (max-device-width: 800px) {
+      width: 50%;
+  }
+`;
+
+export const DivInput = styled.div`
+  padding-top: 3%;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  margin-bottom: 2%;
+  margin: auto;
 `;
 

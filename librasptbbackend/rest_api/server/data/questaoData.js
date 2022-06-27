@@ -159,6 +159,7 @@ exports.saveQuestaoMarcarLacuna = async function (questao) {
 
 
 exports.saveQuestaoMarcarMidia = async function (questao) {
+console.log(questao)
   result = await db.query(
     "insert into questao (id) values((select count(*)+1 from questao)) RETURNING id;"
   );
@@ -174,6 +175,7 @@ exports.saveQuestaoMarcarMidia = async function (questao) {
       FOREIGN KEY (questao) REFERENCES questao(id)
 );
 */
+
   result3 = await db.query(
     "insert into marcar(questao, opcao1, opcao2, opcao3, opcao4, opcao5) values ('" +
       result.rows[0].id +
@@ -199,14 +201,16 @@ exports.saveQuestaoMarcarMidia = async function (questao) {
       result2.rows[0].id +
       "');"
   );
+
+  for (let i =0; i < questao.categoria.length; i++){
   result4 = await db.query(
     "insert into questaocategoria(questao, categoria) values ('" +
       result.rows[0].id +
       "','" +
-      questao.categoria +
+      questao.categoria[i] +
       "')"
   );
-
+  }
   return result4;
 };
 
