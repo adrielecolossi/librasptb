@@ -1,6 +1,6 @@
 import React from "react";
 import HeaderOne from "../header/index.js";
-import { DivInputForm, Title, DivSelect, DivInput } from "./styles.js";
+import { DivInputForm, Title, DivSelect, DivInput, Divs } from "./styles.js";
 import ButtonJS from "../components/Button/index.js";
 import InputJS from "../components/Input/index.js";
 import { useState, useEffect } from "react";
@@ -39,14 +39,12 @@ function FormAlternativaVideo() {
     e.preventDefault();
     if (categoriasQuestao === [] || imagemQuestao == undefined || alternativaCerta === undefined || alternativaErrada1 === undefined || alternativaErrada2 === undefined || alternativaErrada3 === undefined || alternativaErrada4 === undefined) {
       alert('Dados incompletos')
-    } else 
-    
-    {
+    } else {
       setCategoriasQuestao([])
-      for(let i = 0; i < categorias.length;i++ ){
-        if (document.getElementsByClassName('categoria')[i].checked){
+      for (let i = 0; i < categorias.length; i++) {
+        if (document.getElementsByClassName('categoria')[i].checked) {
           setCategoriasQuestao(categoriasQuestao => [...categoriasQuestao, document.getElementsByClassName('categoria')[i].value])
-        }    
+        }
       }
     }
   }
@@ -68,38 +66,38 @@ function FormAlternativaVideo() {
   const [alternativaErrada2, setAlternativaErrada2] = useState();
   const [alternativaErrada3, setAlternativaErrada3] = useState();
   const [alternativaErrada4, setAlternativaErrada4] = useState();
- 
-useEffect(()=>{
-console.log(categoriasQuestao)
-if(categoriasQuestao!==[]){
 
-  const criaQuestaoNoBanco = async (e) => {
-    const fd = new FormData();
-    fd.append("file", imagemQuestao);
-    const response = await axios.post("http://localhost:3001/imagem", fd);
-    const midia = "https://drive.google.com/uc?id=" + response.data;
-    axios
-      .post("http://localhost:3001/questaoMarcarMidia", {
-        token,
-        midia,
-        categoria: categoriasQuestao,
-        alternativaCerta,
-        alternativaErrada1,
-        alternativaErrada2,
-        alternativaErrada3,
-        alternativaErrada4
-      })
-      .then((response) => {
-        alert(response.data.msg);
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  };
-  criaQuestaoNoBanco()
-}
+  useEffect(() => {
+    console.log(categoriasQuestao)
+    if (categoriasQuestao !== []) {
 
-}, [categoriasQuestao])
+      const criaQuestaoNoBanco = async (e) => {
+        const fd = new FormData();
+        fd.append("file", imagemQuestao);
+        const response = await axios.post("http://localhost:3001/imagem", fd);
+        const midia = "https://drive.google.com/uc?id=" + response.data;
+        axios
+          .post("http://localhost:3001/questaoMarcarMidia", {
+            token,
+            midia,
+            categoria: categoriasQuestao,
+            alternativaCerta,
+            alternativaErrada1,
+            alternativaErrada2,
+            alternativaErrada3,
+            alternativaErrada4
+          })
+          .then((response) => {
+            alert(response.data.msg);
+          })
+          .catch((error) => {
+            alert(error);
+          });
+      };
+      criaQuestaoNoBanco()
+    }
+
+  }, [categoriasQuestao])
 
   useEffect(() => {
     const getCategorias = async () => {
@@ -130,46 +128,44 @@ if(categoriasQuestao!==[]){
   }
 
   if (isLoggedIn === 'loggedIn') {
-    return (
-      <>
-        {header}
-        <Title fontSize={2.5} color={"#000000"}>
-          Marcar alternativa da palavra do vídeo
-        </Title>
-        <Title fontSize={1} color={"#7A7A7A"}>
-          Modelo em que se marca uma alternativa para palavra do vídeo
-        </Title>
-        
+  return (
+    <>
+      {header}
+      <Title fontSize={2.5} color={"#000000"}>
+        Marcar alternativa da palavra do vídeo
+      </Title>
+      <Title fontSize={1} color={"#7A7A7A"}>
+        Modelo em que se marca uma alternativa para palavra do vídeo
+      </Title>
+      <br />
+      <Divs>
         <DivInput>
-          <label for="categoria">Categoria(s):</label>
+          <p>Categoria(s):</p>
           <DivSelect>
             {categorias.map((categoria) => {
               return (
                 <div>
                   <input class="categoria" key={categoria.nome} value={categoria.id} type='checkbox' />
-                  <p>{categoria.nome}</p>
+                  <label for="categoria">{categoria.nome}</label>
                 </div>
               );
             })}
           </DivSelect>
-        </DivInput>
-        <div style={{ display: "flex", margin: "2%", justifyContent: "center" }}>
           <ButtonJS
             onClick={openModal}
+            padding={"2%"}
+            width={"30vw"}
             backgroundColor={"#8ECAE6"}
             color={"#000000"}
-            borderRadius={0}
+            borderRadius={"5px"}
             name={"Criar Categoria"}
           />
-        
-        </div>
+        </DivInput>
         <DivInputForm>
           <div>
             <label for="frase">Vídeo</label>
             <InputJS name="frase" type="file" color={"#8ECAE6"} onChange={(v) => setImagemQuestao(v.target.files[0])}></InputJS>
           </div>
-
-          <br />
           <div>
             <label for="correct">Alternativa Correta</label>
             <InputJS
@@ -232,78 +228,84 @@ if(categoriasQuestao!==[]){
           <br />
           <ButtonJS
             onClick={criaQuestao}
+            padding={"3%"}
+            width={"30vw"}
             backgroundColor={"#219EBC"}
             color={"#FFFF"}
-            borderRadius={0}
+            borderRadius={"5px"}
             name={"Criar Questão"}
           />
         </DivInputForm>
-        
-        <Modal
-          isOpen={modalIsOpen}
-          onRequestClose={closeModal}
-          contentLabel="Example Modal"
-          style={{
-            overlay: {
-              backgroundColor: "#000;",
-              display: "flex",
-              flexDirection: "column",
-            },
-            content: {
-              top: "50%",
-              left: "50%",
-              right: "auto",
-              bottom: "auto",
-              marginRight: "-50%",
-              backgroundColor: "#000;",
-              transform: "translate(-50%, -50%)",
-              display: "flex",
-              flexDirection: "column",
-            },
-          }}
-        >
-          <h1>Criar Categoria</h1>
-          <form enctype="multipart/form-data" method="POST">
-            <label for="nome">Nome da categoria:</label>
-            <br></br>
-            <InputJS
-              type="text"
-              name="nomeCategoria"
-              onChange={(v) => setNomeCategoria(v.target.value)}
-              value={nomeCategoria}
-              color={"#EDEDEDED"}
-              style={{ marginTop: "5%" }}
+      </Divs>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Example Modal"
+        style={{
+          overlay: {
+            backgroundColor: "#000;",
+            display: "flex",
+            flexDirection: "column",
+          },
+          content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            backgroundColor: "#000;",
+            transform: "translate(-50%, -50%)",
+            display: "flex",
+            flexDirection: "column",
+          },
+        }}
+      >
+        <h1>Criar Categoria</h1>
+        <form enctype="multipart/form-data" method="POST">
+          <label for="nome">Nome da categoria:</label>
+          <br></br>
+          <InputJS
+            type="text"
+            name="nomeCategoria"
+            onChange={(v) => setNomeCategoria(v.target.value)}
+            value={nomeCategoria}
+            color={"#EDEDEDED"}
+            style={{ marginTop: "5%" }}
+          />
+          <br></br>
+          <br></br>
+          <label for="url">Logo da categoria:</label>
+          <br></br>
+          <InputJS
+            type="file"
+            name="url"
+            style={{ marginTop: "3%", marginBottom: "5%" }}
+            onChange={(v) => setImagemCategoria(v.target.files[0])}
+          ></InputJS>
+          <br></br>
+          <br></br>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <ButtonJS
+              onClick={criaCategoria}
+              padding={"2%"}
+              width={"25vw"}
+              backgroundColor={"rgba(142, 202, 230, 0.5)"}
+              borderRadius={"10px"}
+              name={"Criar"}
             />
-            <br></br>
-            <br></br>
-            <label for="url">Logo da categoria:</label>
-            <br></br>
-            <InputJS
-              type="file"
-              name="url"
-              style={{ marginTop: "3%", marginBottom: "5%" }}
-              onChange={(v) => setImagemCategoria(v.target.files[0])}
-            ></InputJS>
-            <br></br>
-            <br></br>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <ButtonJS
-                onClick={criaCategoria}
-                backgroundColor={"rgba(142, 202, 230, 0.5)"}
-                borderRadius={"20px"}
-                name={"Criar"}
-              />
-              <ButtonJS
-                onClick={closeModal}
-                backgroundColor={"rgba(229, 116, 116, 0.5)"}
-                borderRadius={"20px"}
-                name={"Cancelar"}
-              />
-            </div>
-          </form>
-        </Modal>
-      </>
-    );
+            <ButtonJS
+              onClick={closeModal}
+              padding={"2%"}
+              width={"25vw"}
+              backgroundColor={"rgba(229, 116, 116, 0.5)"}
+              borderRadius={"10px"}
+              name={"Cancelar"}
+            />
+          </div>
+        </form>
+      </Modal>
+    </>
+  );
   } else {
     return (<div>{header}<p>Faça login primeiro</p></div>)
   }

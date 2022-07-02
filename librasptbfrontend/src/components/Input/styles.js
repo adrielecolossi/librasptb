@@ -5,5 +5,8 @@ export const Input = styled.input`
   border: none;
   padding: 10px;
   margin: 2px 2px 2px 2px;
-  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
 `;

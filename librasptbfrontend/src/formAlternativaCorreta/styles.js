@@ -9,14 +9,36 @@ export const Title = styled.h1`
   margin-left: 3%;
 `;
 
-export const DivInputForm = styled.form`
-  margin-top: 2%;
+export const Divs = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+`;
+
+export const DivInput = styled.div`
+  width: 40%;
+  height: 50vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-around;
+  background-color:  rgba(142,202,230,0.2);
+   @media only screen and (min-width: 300px) and (max-device-width: 800px) {
+      width: 65%;
+      margin-bottom: 2%;
+   }
+`;
+
+export const DivInputForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2.5%;
+  background-color:  rgba(142,202,230,0.2);
   div {
     display: flex;
-    width: 30%;
+    width: 100%;
+    padding: 2%;
     justify-content: space-between;
     align-items: center;
   }
@@ -35,33 +57,19 @@ export const DivInputForm = styled.form`
 
 export const DivSelect = styled.div`
   flex-wrap: wrap;
-  width: 30%;
-  margin: auto;
+  width: 70%;
   display: flex;
   justify-content: space-between;
-  div{
+  div {
     padding: 2%;
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  #categoria {
+  input {
     cursor: pointer;
   }
-   @media only screen and (min-width: 300px) and (max-device-width: 500px) {
-      width: 60%;
-      justify-content: center;
-  }
-  @media only screen and (min-width: 500px) and (max-device-width: 800px) {
-      width: 50%;
+  @media only screen and (min-width: 300px) and (max-device-width: 800px) {
+    width: 80%;
   }
 `;
-
-export const DivInput = styled.div`
-  padding-top: 3%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: auto;
-`;
-

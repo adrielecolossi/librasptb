@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import axios from "axios";
 import HeaderOne from "../header/index.js";
-import { DivInputForm,DivSelectAndButton, Title, DivSelect, DivButtonCategories} from "./styles.js";
+import { DivInputForm, Title, DivSelect, DivInput, Divs } from "./styles.js";
 import ButtonJS from "../components/Button/index.js";
 import InputJS from "../components/Input/index.js"
 function FormMarcarLacuna() {
@@ -34,11 +34,11 @@ function FormMarcarLacuna() {
   let token = localStorage.getItem('tokenLibrasPTB');
   const criaQuestao = async (e) => {
     e.preventDefault();
-    if (categoriaQuestao === undefined || fraseQuestao == undefined || alternativaCerta===undefined || alternativaErrada1===undefined || alternativaErrada2===undefined || alternativaErrada3===undefined || alternativaErrada4===undefined) {
+    if (categoriaQuestao === undefined || fraseQuestao == undefined || alternativaCerta === undefined || alternativaErrada1 === undefined || alternativaErrada2 === undefined || alternativaErrada3 === undefined || alternativaErrada4 === undefined) {
       alert("Dados incompletos");
-      console.log(categoriaQuestao,alternativaCerta)
+      console.log(categoriaQuestao, alternativaCerta)
     } else {
-    axios
+      axios
         .post("http://localhost:3001/questaoMarcarLacuna", {
           token,
           frase: fraseQuestao,
@@ -55,7 +55,7 @@ function FormMarcarLacuna() {
         .catch((error) => {
           alert(error);
         });
-      
+
     }
   };
   const [categorias, setCategorias] = useState([]);
@@ -73,10 +73,10 @@ function FormMarcarLacuna() {
   const [imagemCategoria, setImagemCategoria] = useState();
   const [fraseQuestao, setFraseQuestao] = useState();
   const [alternativaCerta, setAlternativaCerta] = useState();
-  const [alternativaErrada1, setAlternativaErrada1] = useState(); 
+  const [alternativaErrada1, setAlternativaErrada1] = useState();
   const [alternativaErrada2, setAlternativaErrada2] = useState();
   const [alternativaErrada3, setAlternativaErrada3] = useState();
-  const [alternativaErrada4, setAlternativaErrada4] = useState();   
+  const [alternativaErrada4, setAlternativaErrada4] = useState();
   const [categoriaQuestao, setCategoriaQuestao] = useState(1);
 
   useEffect(() => {
@@ -89,7 +89,7 @@ function FormMarcarLacuna() {
     getCategorias();
   }, []);
   let header;
-  const [isLoggedIn, setIsLoggedIn]= useState()
+  const [isLoggedIn, setIsLoggedIn] = useState()
   useEffect(() => {
     let token = localStorage.getItem('tokenLibrasPTB');
     const getLogin = async () => {
@@ -97,62 +97,56 @@ function FormMarcarLacuna() {
         "http://localhost:3001/login", { params: { token } }
       );
       setIsLoggedIn(response.data.msg);
-  
+
     };
     getLogin();
   }, []);
   if (isLoggedIn === 'loggedIn') {
-   header = <HeaderOne logged={true}></HeaderOne>
-    } else {
-  header = <HeaderOne logged={false}></HeaderOne>
-    }
+    header = <HeaderOne logged={true}></HeaderOne>
+  } else {
+    header = <HeaderOne logged={false}></HeaderOne>
+  }
 
 
-if(isLoggedIn==='loggedIn'){
+  if (isLoggedIn === 'loggedIn') {
 
-  return (
-    <>
-      <HeaderOne logged={true}></HeaderOne>
-      <Title fontSize={2.5} color={"#000000"}>
-        Marcar Lacuna com Alternativa
-      </Title>
-      <Title fontSize={1} color={"#7A7A7A"}>
-        Modelo em que se marca uma alternativa para preencher frase
-      </Title>
-<DivSelectAndButton>
-      <DivInputForm>
-        <DivSelect>
-          <label for="categoria">Categoria</label>
-          <select
-            id="categoria"
-            style={{ marginLeft: "5%" }}
-            onChange={(v) => setCategoriaQuestao(v.target.value)}
-          >
-            {categorias.map((categoria) => {
-              return (
-                <option key={categoria.nome} value={categoria.id}>
-                  {categoria.nome}
-                </option>
-              );
-            })}
-          </select>
-
-         
-        </DivSelect>
-      </DivInputForm>
-      <DivButtonCategories><ButtonJS
+    return (
+      <>
+        <HeaderOne logged={true}></HeaderOne>
+        <Title fontSize={2.5} color={"#000000"}>
+          Marcar Lacuna com Alternativa
+        </Title>
+        <Title fontSize={1} color={"#7A7A7A"}>
+          Modelo em que se marca uma alternativa para preencher frase
+        </Title>
+        <br />
+        <Divs>
+          <DivInput>
+            <p>Categoria(s):</p>
+            <DivSelect>
+              {categorias.map((categoria) => {
+                return (
+                  <div>
+                    <input class="categoria" key={categoria.nome} value={categoria.id} type='checkbox' />
+                    <label for="categoria">{categoria.nome}</label>
+                  </div>
+                );
+              })}
+            </DivSelect>
+            <ButtonJS
               onClick={openModal}
+              padding={"2%"}
+              width={"30vw"}
               backgroundColor={"#8ECAE6"}
               color={"#000000"}
-              borderRadius={0}
+              borderRadius={"5px"}
               name={"Criar Categoria"}
-            /> 
-            </DivButtonCategories>
-      </DivSelectAndButton>
-      <DivInputForm>
-        <div>
-          <label for="frase">Frase</label>
-          <InputJS
+            />
+          </DivInput>
+          <DivInputForm>
+            <div>
+              <label for="frase">Frase</label>
+              <InputJS
                 id="inputfrase"
                 type="text"
                 name="frase"
@@ -160,12 +154,11 @@ if(isLoggedIn==='loggedIn'){
                 onChange={(v) => setFraseQuestao(v.target.value)}
                 value={fraseQuestao}
               />
-        </div>
-        <br />
-        <div>
-          <label for="correct">Alternativa Correta</label>
-  
-           <InputJS
+            </div>
+            <div>
+              <label for="correct">Alternativa Correta</label>
+
+              <InputJS
                 id="inputfrase"
                 type="text"
                 name="correct"
@@ -173,11 +166,11 @@ if(isLoggedIn==='loggedIn'){
                 onChange={(v) => setAlternativaCerta(v.target.value)}
                 value={alternativaCerta}
               />
-        </div>
-        <br />
-        <div>
-          <label for="wrong1">Alternativa Errada</label>
-           <InputJS
+            </div>
+            <br />
+            <div>
+              <label for="wrong1">Alternativa Errada</label>
+              <InputJS
                 id="inputfrase"
                 type="text"
                 name="wrong1"
@@ -185,11 +178,11 @@ if(isLoggedIn==='loggedIn'){
                 onChange={(v) => setAlternativaErrada1(v.target.value)}
                 value={alternativaErrada1}
               />
-        </div>
-        <br />
-        <div>
-          <label for="wrong2">Alternativa Errada</label>
-          <InputJS
+            </div>
+            <br />
+            <div>
+              <label for="wrong2">Alternativa Errada</label>
+              <InputJS
                 id="inputfrase"
                 type="text"
                 name="wrong2"
@@ -197,11 +190,11 @@ if(isLoggedIn==='loggedIn'){
                 onChange={(v) => setAlternativaErrada2(v.target.value)}
                 value={alternativaErrada2}
               />
-        </div>
-        <br />
-        <div>
-          <label for="wrong3">Alternativa Errada</label>
-          <InputJS
+            </div>
+            <br />
+            <div>
+              <label for="wrong3">Alternativa Errada</label>
+              <InputJS
                 id="inputfrase"
                 type="text"
                 name="wrong3"
@@ -209,11 +202,11 @@ if(isLoggedIn==='loggedIn'){
                 onChange={(v) => setAlternativaErrada3(v.target.value)}
                 value={alternativaErrada3}
               />
-        </div>
-        <br />
-        <div>
-          <label for="wrong4">Alternativa Errada</label>
-          <InputJS
+            </div>
+            <br />
+            <div>
+              <label for="wrong4">Alternativa Errada</label>
+              <InputJS
                 id="inputfrase"
                 type="text"
                 name="wrong4"
@@ -221,83 +214,89 @@ if(isLoggedIn==='loggedIn'){
                 onChange={(v) => setAlternativaErrada4(v.target.value)}
                 value={alternativaErrada4}
               />
-        </div>
-        <br />
-        <ButtonJS
-          onClick={criaQuestao}
-          backgroundColor={"#219EBC"}
-          color={"#FFFF"}
-          borderRadius={0}
-          name={"Criar Questão"}
-        />
-      </DivInputForm>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="Example Modal"
-        style={{
-          overlay: {
-            backgroundColor: "#000;",
-            display: "flex",
-            flexDirection: "column",
-          },
-          content: {
-            top: "50%",
-            left: "50%",
-            right: "auto",
-            bottom: "auto",
-            marginRight: "-50%",
-            backgroundColor: "#000;",
-            transform: "translate(-50%, -50%)",
-            display: "flex",
-            flexDirection: "column",
-          },
-        }}
-      >
-        <h1>Criar Categoria</h1>
-        <form enctype="multipart/form-data" method="POST">
-          <label for="nome">Nome da categoria:</label>
-          <br></br>
-          <InputJS
-            type="text"
-            name="nomeCategoria"
-            onChange={(v) => setNomeCategoria(v.target.value)}
-            value={nomeCategoria}
-            color={"#EDEDEDED"}
-            style={{ marginTop: "5%" }}
-          />
-          <br></br>
-          <br></br>
-          <label for="url">Logo da categoria:</label>
-          <br></br>
-          <InputJS
-            type="file"
-            name="url"
-            style={{ marginTop: "3%", marginBottom: "5%" }}
-            onChange={(v) => setImagemCategoria(v.target.files[0])}
-          ></InputJS>
-          <br></br>
-          <br></br>
-          <div style={{ display: "flex", flexDirection: "column" }}>
+            </div>
             <ButtonJS
-              onClick={criaCategoria}
-              backgroundColor={"rgba(142, 202, 230, 0.5)"}
-              borderRadius={"20px"}
-              name={"Criar"}
+              onClick={criaQuestao}
+              padding={"3%"}
+              width={"30vw"}
+              backgroundColor={"#219EBC"}
+              color={"#FFFF"}
+              borderRadius={"5px"}
+              name={"Criar Questão"}
             />
-            <ButtonJS
-              onClick={closeModal}
-              backgroundColor={"rgba(229, 116, 116, 0.5)"}
-              borderRadius={"20px"}
-              name={"Cancelar"}
+          </DivInputForm>
+        </Divs>
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          contentLabel="Example Modal"
+          style={{
+            overlay: {
+              backgroundColor: "#000;",
+              display: "flex",
+              flexDirection: "column",
+            },
+            content: {
+              top: "50%",
+              left: "50%",
+              right: "auto",
+              bottom: "auto",
+              marginRight: "-50%",
+              backgroundColor: "#000;",
+              transform: "translate(-50%, -50%)",
+              display: "flex",
+              flexDirection: "column",
+            },
+          }}
+        >
+          <h1>Criar Categoria</h1>
+          <form enctype="multipart/form-data" method="POST">
+            <label for="nome">Nome da categoria:</label>
+            <br></br>
+            <InputJS
+              type="text"
+              name="nomeCategoria"
+              onChange={(v) => setNomeCategoria(v.target.value)}
+              value={nomeCategoria}
+              color={"#EDEDEDED"}
+              style={{ marginTop: "5%" }}
             />
-          </div>
-        </form>
-      </Modal>
-    </>
-  );
-          } else{
-            return(<div>{header}<p>Faça login primeiro</p></div>)
-          }
+            <br></br>
+            <br></br>
+            <label for="url">Logo da categoria:</label>
+            <br></br>
+            <InputJS
+              type="file"
+              name="url"
+              style={{ marginTop: "3%", marginBottom: "5%" }}
+              onChange={(v) => setImagemCategoria(v.target.files[0])}
+            ></InputJS>
+            <br></br>
+            <br></br>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <ButtonJS
+                onClick={criaCategoria}
+                padding={"2%"}
+                width={"25vw"}
+                backgroundColor={"rgba(142, 202, 230, 0.5)"}
+                borderRadius={"10px"}
+                name={"Criar"}
+              />
+              <ButtonJS
+                onClick={closeModal}
+                padding={"2%"}
+                width={"25vw"}
+                backgroundColor={"rgba(229, 116, 116, 0.5)"}
+                borderRadius={"10px"}
+                name={"Cancelar"}
+              />
+            </div>
+          </form>
+        </Modal>
+      </>
+    );
+  } else {
+    return (<div>{header}<p>Faça login primeiro</p></div>)
+  }
 }
 export default FormMarcarLacuna;

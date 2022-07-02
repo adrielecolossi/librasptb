@@ -8,14 +8,37 @@ export const Title = styled.h1`
   margin-left: 3%;
 `;
 
-export const DivInputForm = styled.form`
-  margin-top: 2%;
+export const DivInput = styled.div`
+  width: 40%;
+  height: 50vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-around;
+  background-color:  rgba(142,202,230,0.2);
+   @media only screen and (min-width: 300px) and (max-device-width: 800px) {
+      width: 65%;
+      margin-bottom: 2%;
+   }
+`;
+
+export const Divs = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+`;
+
+export const DivInputForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  background-color:  rgba(142,202,230,0.2);
+  padding: 2%;
   div {
     display: flex;
-    width: 30%;
+    width: 90%;
+    padding: 2%;
     justify-content: space-between;
     align-items: center;
   }
@@ -33,28 +56,20 @@ export const DivInputForm = styled.form`
 `;
 
 export const DivSelect = styled.div`
-  select {
-    padding: 10px;
-    font-size: 0.8em;
-    width: 30%;
-  }
-  select:hover {
-    cursor: pointer;
-  }
-  button {
-    border: none;
-    font-size: 0.8em;
-    padding: 12px;
-    width: 40%;
-    background-color: rgba(142, 202, 230, 1);
-  }
-  button:hover {
-    cursor: pointer;
-    background-color: rgb(123, 178, 204);
-  }
+  flex-wrap: wrap;
+  width: 70%;
   display: flex;
-  width: 30%;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2%;
+  div {
+    padding: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  input {
+    cursor: pointer;
+  }
+  @media only screen and (min-width: 300px) and (max-device-width: 800px) {
+    width: 80%;
+  }
 `;

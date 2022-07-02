@@ -2,6 +2,7 @@ import React from "react";
 import { Header } from "./styles";
 
 import { Link } from "react-router-dom";
+import ButtonJS from "../components/Button";
 
 
 function HeaderOne(props) {
@@ -16,7 +17,13 @@ function removeStorage(){
       <>
         <Header>
           <Link to="/home">Home</Link>
-          <button onClick={removeStorage}>Logout</button>
+          <ButtonJS 
+          onClick={removeStorage}
+          padding={"0.2%"}
+          name={"Logout"}
+          color={"white"}
+          backgroundColor={"#00537a"}
+          fontSize={"1em"}/>
         </Header>
       </>
     );

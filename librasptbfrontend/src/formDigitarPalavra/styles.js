@@ -3,95 +3,59 @@ export const Title = styled.h1`
   font-size: ${(props) => `${props.fontSize}em`};
   color: ${(props) => props.color};
   font-weight: 400;
-
   margin-top: 1%;
   margin-left: 3%;
 `;
 
-export const DivForm = styled.div`
+export const Divs = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 4px 4px 4px 4px;
   flex-wrap: wrap;
-  padding: 3%;
-  background-color: rgba(231, 231, 231, 0.5);
-  border-radius: 6px;
-  width: 30%;
-
-  @media only screen and (min-width: 400px) and (max-device-width: 800px) {
-    width: 70%;
-    height: 50vh;
-  }
-  @media only screen and (min-width: 200px) and (max-device-width: 400px) {
-    width: 90%;
-    height: 40vh;
-  }
+  justify-content: space-around;
   form {
+    background-color:  rgba(142,202,230,0.2);
     display: flex;
-    flex-wrap: wrap;
     flex-direction: column;
-    justify-content: space-evenly;
     align-items: center;
+  }
+  #categoria-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color:  rgba(142,202,230,0.2);
+    padding: 2%;
   }
 `;
 
 export const Div = styled.div`
-  margin-top: 2%;
+  width: 70%;
   display: flex;
-  align-items: flex-start;
+  padding: 2%;
   flex-wrap: wrap;
-  justify-content: center;
-`;
+  justify-content: space-between;
+  align-items: center;
+`; 
 
 export const DivInput = styled.div`
   display: flex;
-  align-self: flex-start;
-  padding: 2%;
-  flex-wrap: wrap;
-  margin-top: 2%;
-  margin-bottom: 5%;
-  input {
-    background-color: rgba(142, 202, 230, 0.5);
-    padding: 2%;
-    border: none;
-    width: 90%;
-  }
-  label {
-    margin-right: 10%;
-  }
-  @media only screen and (min-width: 400px) and (max-device-width: 600px) {
-    input {
-      width: 80%;
-    }
-  }
-  @media only screen and (min-width: 200px) and (max-device-width: 400px) {
-    input {
-      width: 53%;
-    }
-  }
-`;
-
-export const Button = styled.button`
-  background-color: ${(props) => props.backgroundColor};
-  color: ${(props) => props.color};
-  border-radius: ${(props) => props.borderRadius};
-  border: none;
-  padding: 4%;
-  cursor: pointer;
-`;
-
-export const Container = styled.div`
-  display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  height: 100vh;
+  justify-content: space-around;
+  padding: 2%;
 `;
 
 export const DivSelect = styled.div`
   display: flex;
-  margin-bottom: 4%;
+  flex-wrap: wrap;
+  width: 70%;
   justify-content: space-between;
-  align-items: center;
+  div {
+    padding: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  input {
+    cursor: pointer;
+  }
 `;
