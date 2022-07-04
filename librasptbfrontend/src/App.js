@@ -7,7 +7,7 @@ import Login from "./login/login.js";
 import Form2 from "./form/formimg.js";
 import Contato from "./contato/contato.js";
 import FormDigitarPalavra from "./formDigitarPalavra/index.js";
-import FormAlternativaCorreta from "./formAlternativaCorreta/index.js";
+import FormAlternativaVideo from "./formAlternativaCorreta/index.js";
 import FormFraseCorreta from "./formFraseCorreta/index.js";
 import FormOrdenarFrase from "./formOrdenarFrase/index.js";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -53,7 +53,7 @@ function App() {
             path="/FormAlternativaCorreta"
             exact
             strict
-            component={FormAlternativaCorreta}
+            component={FormAlternativaVideo}
           ></Route>
           <Route
             path="/FormAlternativaFraseCorreta"

@@ -2,12 +2,12 @@ import React from "react";
 import HeaderOne from "../header/index.js";
 import { useState, useEffect } from "react";
 import axios, { post } from "axios";
-import { InputForm, DivInputForm, Title, DivInput, DivSelect, Divs } from "./styles.js";
+import { Div, Title, DivInput, DivSelect, Divs } from "./styles.js";
 import ButtonJS from "../components/Button/index.js";
 import InputJS from "../components/Input/index.js";
 import Modal from "react-modal";
-import { Input } from "../components/Input/styles.js";
 
+import ThreeDotsWave from "../components/ThreeDotsWave/index.js";
 
 function FormAssociarColunas() {
   const [imagem1, setImagem1] = useState();
@@ -22,11 +22,17 @@ function FormAssociarColunas() {
   const [alternativa5, setAlternativa5] = useState();
   const [nomeCategoria, setNomeCategoria] = useState();
   const [imagemCategoria, setImagemCategoria] = useState();
-  const [categoriaQuestao, setCategoriaQuestao] = useState(1);
+  const [categoriasQuestao, setCategoriasQuestao] = useState(1);
+  const [loading, setLoading] = useState(false)
+  const [loadingCriarCategoria, setLoadingCriarCategoria] = useState(false)
 
+  
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
+
+
   const criaCategoria = async (e) => {
+    setLoadingCriarCategoria(true);
     e.preventDefault();
     if (nomeCategoria === undefined || imagemCategoria === undefined) {
       alert("Dados incompletos");
@@ -42,6 +48,7 @@ function FormAssociarColunas() {
         })
         .then((response) => {
           alert('Categoria criada com sucesso');
+          setLoadingCriarCategoria(false);
         })
         .catch((error) => {
           alert(error);
@@ -51,10 +58,23 @@ function FormAssociarColunas() {
   };
   const criaQuestao = async (e) => {
     e.preventDefault();
-    if (categoriaQuestao === undefined || imagem1 === undefined || imagem2 === undefined || imagem3 === undefined || imagem4 === undefined || imagem5 === undefined || alternativa1 === undefined || alternativa2 === undefined || alternativa3 === undefined || alternativa4 === undefined || alternativa5 === undefined) {
+    if (categoriasQuestao === [] || imagem1 === undefined || imagem2 === undefined || imagem3 === undefined || imagem4 === undefined || imagem5 === undefined || alternativa1 === undefined || alternativa2 === undefined || alternativa3 === undefined || alternativa4 === undefined || alternativa5 === undefined) {
       console.log(imagem1);
       alert('Dados incompletos')
     } else {
+      setLoading(true)
+      setCategoriasQuestao([])
+      for (let i = 0; i < categorias.length; i++) {
+        if (document.getElementsByClassName('categoria')[i].checked) {
+          setCategoriasQuestao(categoriasQuestao => [...categoriasQuestao, document.getElementsByClassName('categoria')[i].value])
+        }
+      }
+  }
+ 
+  }
+
+  useEffect(() => {
+    const criaQuestaoNoBanco = async (e) => {
 
 
       const fd1 = new FormData();
@@ -86,7 +106,7 @@ function FormAssociarColunas() {
       axios
         .post("http://localhost:3001/questaoAssociarColunas", {
           token,
-          categoria: categoriaQuestao,
+          categoria: categoriasQuestao,
           opcao1: midia1,
           opcao2: alternativa1,
           opcao3: midia2,
@@ -100,16 +120,48 @@ function FormAssociarColunas() {
         })
         .then((response) => {
           alert('Questao criada com sucesso');
+          setLoading(false);
         })
         .catch((error) => {
           alert(error);
         });
     }
+    criaQuestaoNoBanco()
+    
+  }, [categoriasQuestao])
 
-  };
+
   const [categorias, setCategorias] = useState([]);
 
 
+  let buttonContent;
+  if (loading == false) {
+    buttonContent = <ButtonJS
+      onClick={criaQuestao}
+      padding={"3%"}
+      width={"30vw"}
+      backgroundColor={"#219EBC"}
+      color={"#FFFF"}
+      borderRadius={"5px"}
+      name={"Criar Questão"}
+    />
+  } else {
+    buttonContent = <ThreeDotsWave />
+  }
+
+  let buttonCategoriesContent;
+  if (loadingCriarCategoria == false) {
+    buttonCategoriesContent = <ButtonJS
+      onClick={criaCategoria}
+      padding={"2%"}
+      width={"25vw"}
+      backgroundColor={"rgba(142, 202, 230, 0.5)"}
+      borderRadius={"10px"}
+      name={"Criar"}
+    />
+  } else {
+    buttonCategoriesContent = <div style={{ display: 'flex', justifyContent: 'center' }}><ThreeDotsWave /></div>
+  }
   function openModal() {
     setIsOpen(true);
   }
@@ -147,153 +199,143 @@ function FormAssociarColunas() {
   }
 
 
-  if(isLoggedIn ==='loggedIn'){
-  return (
-    <>
-      <HeaderOne logged={true}></HeaderOne>
-      <Title fontSize={2.5} color={"#000000"}>
-        Associar Colunas
-      </Title>
-      <Title fontSize={1} color={"#7A7A7A"}>
-        Modelo em que se associa duas respostas de colunas
-      </Title>
-      <br />
-      <Divs>
-        <DivInput>
-          <p>Categoria(s):</p>
-          <DivSelect>
-            {categorias.map((categoria) => {
-              return (
-                <div>
-                  <input class="categoria" key={categoria.nome} value={categoria.id} type='checkbox' />
-                  <label for="categoria">{categoria.nome}</label>
-                </div>
-              );
-            })}
-          </DivSelect>
-          <ButtonJS
-            onClick={openModal}
-            padding={"2%"}
-            width={"30vw"}
-            backgroundColor={"#8ECAE6"}
-            color={"#000000"}
-            borderRadius={"5px"}
-            name={"Criar Categoria"}
-          />
-        </DivInput>
-        <DivInputForm>
-          <InputForm>
-            <p> Imagens </p>
-            <p> Palavras </p>
-          </InputForm>
-          <InputForm>
-            <InputJS type="file" name="url" onChange={(v) => setImagem1(v.target.files[0])}></InputJS>
-            <hr></hr>
-            <InputJS type="text" value={alternativa1} name="alternativa1" onChange={(v) => setAlternativa1(v.target.value)}></InputJS>
-          </InputForm>
-          <InputForm>
-            <InputJS type="file" onChange={(v) => setImagem2(v.target.files[0])}></InputJS>
-            <hr></hr>
-            <InputJS type="text" value={alternativa2} name="alternativa2" onChange={(v) => setAlternativa2(v.target.value)}></InputJS>
-          </InputForm>
-          <InputForm>
-            <InputJS type="file" onChange={(v) => setImagem3(v.target.files[0])}></InputJS>
-            <hr></hr>
-            <InputJS type="text" value={alternativa3} name="alternativa3" onChange={(v) => setAlternativa3(v.target.value)}></InputJS>
-          </InputForm>
-          <InputForm>
-            <InputJS type="file" onChange={(v) => setImagem4(v.target.files[0])}></InputJS>
-            <hr></hr>
-            <InputJS type="text" value={alternativa4} name="alternativa4" onChange={(v) => setAlternativa4(v.target.value)}></InputJS>
-          </InputForm>
-          <InputForm>
-            <InputJS type="file" onChange={(v) => setImagem5(v.target.files[0])}></InputJS>
-            <hr></hr>
-            <InputJS type="text" value={alternativa5} name="alternativa5" onChange={(v) => setAlternativa5(v.target.value)}></InputJS>
-          </InputForm>
+  if (isLoggedIn === 'loggedIn') {
+    return (
+      <>
+        <HeaderOne logged={true}></HeaderOne>
+        <Title fontSize={2.5} color={"#000000"}>
+          Associar Colunas
+        </Title>
+        <Title fontSize={1} color={"#7A7A7A"}>
+          Modelo em que se associa duas respostas de colunas
+        </Title>
+        <br />
+        <Divs>
+          <form enctype="multipart/form-data" method="POST">
+            <DivInput>
+              <p>Categoria(s):</p>
+              <DivSelect>
+                {categorias.map((categoria) => {
+                  return (
+                    <div>
+                      <input class="categoria" key={categoria.nome} value={categoria.id} type='checkbox' />
+                      <label for="categoria">{categoria.nome}</label>
+                    </div>
+                  );
+                })}
+              </DivSelect>
+            </DivInput>
             <br />
-          <ButtonJS
-            onClick={criaQuestao}
-            padding={"3%"}
-            width={"30vw"}
-            backgroundColor={"#219EBC"}
-            color={"#FFFF"}
-            borderRadius={"5px"}
-            name={"Criar Questão"}
-          />
-        </DivInputForm>
-      </Divs>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="Example Modal"
-        style={{
-          overlay: {
-            backgroundColor: "#000;",
-            display: "flex",
-            flexDirection: "column",
-          },
-          content: {
-            top: "50%",
-            left: "50%",
-            right: "auto",
-            bottom: "auto",
-            marginRight: "-50%",
-            backgroundColor: "#000;",
-            transform: "translate(-50%, -50%)",
-            display: "flex",
-            flexDirection: "column",
-          },
-        }}
-      >
-        <h1>Criar Categoria</h1>
-        <form enctype="multipart/form-data" method="POST">
-          <label for="nome">Nome da categoria:</label>
-          <br></br>
-          <InputJS
-            type="text"
-            name="nomeCategoria"
-            onChange={(v) => setNomeCategoria(v.target.value)}
-            value={nomeCategoria}
-            color={"#EDEDEDED"}
-            style={{ marginTop: "5%" }}
-          />
-          <br></br>
-          <br></br>
-          <label for="url">Logo da categoria:</label>
-          <br></br>
-          <InputJS
-            type="file"
-            name="url"
-            style={{ marginTop: "3%", marginBottom: "5%" }}
-            onChange={(v) => setImagemCategoria(v.target.files[0])}
-          ></InputJS>
-          <br></br>
-          <br></br>
-          <div style={{ display: "flex", flexDirection: "column" }}>
+            <Div>
+              <p> Imagens </p>
+              <p> Palavras </p>
+            </Div>
+            <Div>
+              <InputJS type="file" name="url" onChange={(v) => setImagem1(v.target.files[0])}></InputJS>
+              <hr></hr>
+              <InputJS type="text" value={alternativa1} name="alternativa1" onChange={(v) => setAlternativa1(v.target.value)}></InputJS>
+            </Div>
+            <Div>
+              <InputJS type="file" onChange={(v) => setImagem2(v.target.files[0])}></InputJS>
+              <hr></hr>
+              <InputJS type="text" value={alternativa2} name="alternativa2" onChange={(v) => setAlternativa2(v.target.value)}></InputJS>
+            </Div>
+            <Div>
+              <InputJS type="file" onChange={(v) => setImagem3(v.target.files[0])}></InputJS>
+              <hr></hr>
+              <InputJS type="text" value={alternativa3} name="alternativa3" onChange={(v) => setAlternativa3(v.target.value)}></InputJS>
+            </Div>
+            <Div>
+              <InputJS type="file" onChange={(v) => setImagem4(v.target.files[0])}></InputJS>
+              <hr></hr>
+              <InputJS type="text" value={alternativa4} name="alternativa4" onChange={(v) => setAlternativa4(v.target.value)}></InputJS>
+            </Div>
+            <Div>
+              <InputJS type="file" onChange={(v) => setImagem5(v.target.files[0])}></InputJS>
+              <hr></hr>
+              <InputJS type="text" value={alternativa5} name="alternativa5" onChange={(v) => setAlternativa5(v.target.value)}></InputJS>
+            </Div>
+           {buttonContent}
+            <br />
+          </form>
+          <div id="categoria-div">
+            <p> Clique no botão abaixo para criar uma categoria</p>
             <ButtonJS
-              onClick={criaCategoria}
-              padding={"2%"}
-              width={"25vw"}
-              backgroundColor={"rgba(142, 202, 230, 0.5)"}
-              borderRadius={"10px"}
-              name={"Criar"}
-            />
-            <ButtonJS
-              onClick={closeModal}
-              padding={"2%"}
-              width={"25vw"}
-              backgroundColor={"rgba(229, 116, 116, 0.5)"}
-              borderRadius={"10px"}
-              name={"Cancelar"}
+              onClick={openModal}
+              padding={"3%"}
+              width={"30vw"}
+              backgroundColor={"#8ECAE6"}
+              color={"#000000"}
+              borderRadius={"5px"}
+              name={"Criar Categoria"}
             />
           </div>
-        </form>
-      </Modal>
-    </>
-  );
+         
+        </Divs>
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          contentLabel="Example Modal"
+          style={{
+            overlay: {
+              backgroundColor: "#000;",
+              display: "flex",
+              flexDirection: "column",
+            },
+            content: {
+              top: "50%",
+              left: "50%",
+              right: "auto",
+              bottom: "auto",
+              marginRight: "-50%",
+              backgroundColor: "#000;",
+              transform: "translate(-50%, -50%)",
+              display: "flex",
+              flexDirection: "column",
+            },
+          }}
+        >
+          <h1>Criar Categoria</h1>
+          <form enctype="multipart/form-data" method="POST">
+            <label for="nome">Nome da categoria:</label>
+            <br></br>
+            <InputJS
+              type="text"
+              name="nomeCategoria"
+              onChange={(v) => setNomeCategoria(v.target.value)}
+              value={nomeCategoria}
+              color={"#EDEDEDED"}
+              style={{ marginTop: "5%" }}
+            />
+            <br></br>
+            <br></br>
+            <label for="url">Logo da categoria:</label>
+            <br></br>
+            <InputJS
+              type="file"
+              name="url"
+              style={{ marginTop: "3%", marginBottom: "5%" }}
+              onChange={(v) => setImagemCategoria(v.target.files[0])}
+            ></InputJS>
+            <br></br>
+            <br></br>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              {buttonCategoriesContent}
+              <ButtonJS
+                onClick={closeModal}
+                padding={"2%"}
+                width={"25vw"}
+                backgroundColor={"rgba(229, 116, 116, 0.5)"}
+                borderRadius={"10px"}
+                name={"Cancelar"}
+              />
+            </div>
+          </form>
+        </Modal>
+      </>
+    );
   } else {
-      return(<div>{header}<p>Faça login primeiro</p></div>)
-    }
+    return (<div>{header}<p>Faça login primeiro</p></div>)
+  }
 }
 export default FormAssociarColunas;

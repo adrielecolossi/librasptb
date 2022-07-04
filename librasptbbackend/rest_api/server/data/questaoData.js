@@ -1,4 +1,4 @@
-const { query } = require("express");
+const { query, json } = require("express");
 const { JsonWebTokenError } = require("jsonwebtoken");
 const db = require("../infra/database");
 const fs = require("fs");
@@ -201,7 +201,7 @@ console.log(questao)
       result2.rows[0].id +
       "');"
   );
-
+let result4;
   for (let i =0; i < questao.categoria.length; i++){
   result4 = await db.query(
     "insert into questaocategoria(questao, categoria) values ('" +
@@ -285,15 +285,16 @@ exports.saveQuestaoAssociarColunas = async function (questao) {
       questao.opcao10 +
       "');"
   );
-
-  result4 = await db.query(
-    "insert into questaocategoria(questao, categoria) values ('" +
+let result4;
+  for (let i = 0; i < questao.categoria.length; i++) {
+    result4 = await db.query(
+      "insert into questaocategoria(questao, categoria) values ('" +
       result.rows[0].id +
       "','" +
-      questao.categoria +
+      questao.categoria[i] +
       "')"
-  );
-
+    );
+  }
   return result4;
 };
 
