@@ -1,6 +1,5 @@
 import React from "react";
 import {Button} from "./styles";
-import Modal from "react-modal";
 
 function ButtonJS(props) {
     return (

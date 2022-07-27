@@ -5,10 +5,9 @@ import splashScreen from "./splashScreen/index.js";
 import Form from "./form/form.js";
 import Login from "./login/login.js";
 import Form2 from "./form/formimg.js";
-import Contato from "./contato/contato.js";
 import FormDigitarPalavra from "./formDigitarPalavra/index.js";
 import FormAlternativaVideo from "./formAlternativaCorreta/index.js";
-import FormFraseCorreta from "./formFraseCorreta/index.js";
+import FormAlternativaLacuna from "./formAlternativaLacuna/index.js";
 import FormOrdenarFrase from "./formOrdenarFrase/index.js";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Footer from "./footer";
@@ -36,7 +35,6 @@ function App() {
           ></Route>
           <Route path="/form" component={Form}></Route>
           <Route path="/form2" component={Form2}></Route>
-          <Route path="/contato" component={Contato}></Route>
           <Route
             path="/FormDigitarPalavra"
             exact
@@ -56,10 +54,10 @@ function App() {
             component={FormAlternativaVideo}
           ></Route>
           <Route
-            path="/FormAlternativaFraseCorreta"
+            path="/FormAlternativaLacuna"
             exact
             strict
-            component={FormFraseCorreta}
+            component={FormAlternativaLacuna}
           ></Route>
           <Route path="/" component={splashScreen}></Route>
         </Switch>

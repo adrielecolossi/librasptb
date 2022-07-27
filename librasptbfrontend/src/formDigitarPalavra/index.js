@@ -5,11 +5,15 @@ import axios, { post } from "axios";
 import Modal from "react-modal";
 import ButtonJS from "../components/Button/index.js"
 import InputJS from "../components/Input/index.js"
+import ThreeDotsWave from "../components/ThreeDotsWave/index.js";
+import { Redirect } from "react-router-dom";
 const token = localStorage.getItem("tokenLibrasPTB");
-
 function FormDigitarPalavra() {
+
+  const [categoriasQuestao, setCategoriasQuestao] = useState([]);
   const criaCategoria = async (e) => {
     e.preventDefault();
+    setLoadingCriarCategoria(true)
     if (nomeCategoria === undefined || imagemCategoria === undefined) {
       alert("Dados incompletos");
     } else {
@@ -23,7 +27,9 @@ function FormDigitarPalavra() {
           midia,
         })
         .then((response) => {
+          setLoadingCriarCategoria(false)
           alert('Categoria criada com sucesso');
+
         })
         .catch((error) => {
           alert(error);
@@ -33,11 +39,32 @@ function FormDigitarPalavra() {
   };
   const criaQuestao = async (e) => {
     e.preventDefault();
-    if (categoriaQuestao === undefined || palavraQuestao === undefined || imagemQuestao === undefined) {
-      console.log(categoriaQuestao, palavraQuestao, imagemQuestao)
-      alert('Dados incompletos')
+    let haCategoria= false;
+    for(let i=0; i<categorias.length; i++){
+
+      if (document.getElementsByClassName('categoria')[i].checked) {
+haCategoria=true;
+  }
+}
+
+    if  (palavraQuestao === undefined || imagemQuestao === undefined || haCategoria==false) {
+   alert('Dados incompletos')
     } else {
-      const fd = new FormData();
+      setLoading(true)
+     // setCategoriasQuestao([])
+    
+      for (let i = 0; i < categorias.length; i++) {
+        if (document.getElementsByClassName('categoria')[i].checked) {
+          setCategoriasQuestao(categoriasQuestao => [...categoriasQuestao, document.getElementsByClassName('categoria')[i].value])
+        }
+      }
+     
+    }
+  };
+
+  useEffect(() => {
+    const criaQuestaoNoBanco = async (e) => {
+    const fd = new FormData();
       fd.append("file", imagemQuestao);
       const response = await axios.post("http://localhost:3001/imagem", fd);
       const midia = "https://drive.google.com/uc?id=" + response.data;
@@ -46,16 +73,20 @@ function FormDigitarPalavra() {
           token,
           resposta: palavraQuestao,
           midia,
-          categoria: categoriaQuestao
+          categoria: categoriasQuestao
         })
         .then((response) => {
+          setLoading(false)
           alert('Questao criada com sucesso');
         })
         .catch((error) => {
           alert(error);
         });
-    }
-  };
+   
+          }
+    criaQuestaoNoBanco()
+ 
+  }, [categoriasQuestao])
   const [modalIsOpen, setIsOpen] = React.useState(false);
   function openModal() {
     setIsOpen(true);
@@ -63,15 +94,14 @@ function FormDigitarPalavra() {
   function closeModal() {
     setIsOpen(false);
   }
-
   const [categorias, setCategorias] = useState([]);
   const [nomeCategoria, setNomeCategoria] = useState();
   const [imagemCategoria, setImagemCategoria] = useState();
   const [imagemQuestao, setImagemQuestao] = useState();
   const [palavraQuestao, setPalavraQuestao] = useState();
-  const [categoriaQuestao, setCategoriaQuestao] = useState(1);
-  const [showModal, setShowModal] = useState(false);
 
+  const [loading, setLoading] = useState(false)
+  const [loadingCriarCategoria, setLoadingCriarCategoria] = useState(false)
   useEffect(() => {
     const getCategorias = async () => {
       const categoriasDoBanco = await axios.get(
@@ -81,7 +111,20 @@ function FormDigitarPalavra() {
     };
     getCategorias();
   }, []);
-  let header;
+  let buttonContent;
+  if (loading === false) {
+    buttonContent = <ButtonJS
+      onClick={criaQuestao}
+      padding={"3%"}
+      width={"30vw"}
+      backgroundColor={"#219EBC"}
+      color={"#FFFF"}
+      borderRadius={"5px"}
+      name={"Criar Questão"}
+    />
+  } else {
+    buttonContent = <div style={{ display: 'flex', justifyContent: 'center' }}><ThreeDotsWave /></div>
+  }
   const [isLoggedIn, setIsLoggedIn] = useState()
   useEffect(() => {
     let token = localStorage.getItem('tokenLibrasPTB');
@@ -92,15 +135,28 @@ function FormDigitarPalavra() {
       setIsLoggedIn(response.data.msg);
       console.log(isLoggedIn)
     };
-    getLogin();
+    try{
+      getLogin();
+    } catch(error){
+      setIsLoggedIn('notLoggedIn');
+    }
   }, []);
-  if (isLoggedIn === 'loggedIn') {
-    header = <HeaderOne logged={true}></HeaderOne>
+  let header = <HeaderOne logged={true}></HeaderOne>
+  let buttonCategoriesContent;
+  if (loadingCriarCategoria === false) {
+    buttonCategoriesContent = <ButtonJS
+      onClick={criaCategoria}
+      padding={"2%"}
+      width={"25vw"}
+      backgroundColor={"rgba(142, 202, 230, 0.5)"}
+      borderRadius={"10px"}
+      name={"Criar"}
+    />
   } else {
-    header = <HeaderOne logged={false}></HeaderOne>
+    buttonCategoriesContent = <div style={{ display: 'flex', justifyContent: 'center' }}><ThreeDotsWave /></div>
   }
 
-  if (isLoggedIn === 'loggedIn') {
+  if (isLoggedIn === 'loggedIn'  || isLoggedIn === undefined) {
     return (
       <>
         {header}
@@ -146,15 +202,7 @@ function FormDigitarPalavra() {
               />
             </Div>
             <Div>
-              <ButtonJS
-                onClick={criaQuestao}
-                padding={"2%"}
-                width={"30vw"}
-                backgroundColor={"#219EBC"}
-                color={"#FFFF"}
-                borderRadius={"5px"}
-                name={"Criar Questão"}
-              />
+            {buttonContent}
             </Div>
           </form>
           <div id="categoria-div">
@@ -212,21 +260,12 @@ function FormDigitarPalavra() {
             <InputJS
               type="file"
               name="url"
-              //value={imagemCategoria}
-              // style={{ marginTop: "3%", marginBottom: "5%" }}
               onChange={(v) => setImagemCategoria(v.target.files[0])}
             />
             <br></br>
             <br></br>
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <ButtonJS
-                onClick={criaCategoria}
-                padding={"2%"}
-                width={"25vw"}
-                backgroundColor={"rgba(142, 202, 230, 0.5)"}
-                borderRadius={"10px"}
-                name={"Criar"}
-              />
+            {buttonCategoriesContent}
               <ButtonJS
                 onClick={closeModal}
                 padding={"2%"}
@@ -241,7 +280,8 @@ function FormDigitarPalavra() {
       </>
     );
   } else {
-    return (<div>{header}<p>Faça login primeiro</p></div>)
+    return (<div>{header}<Redirect to="/login" />
+    </div>)
   }
 
 }

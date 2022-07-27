@@ -5,7 +5,8 @@ export const Button = styled.button`
   color: ${(props) => props.color};
   border-radius: ${(props) => props.borderRadius};
   border: none;
-  font-size: ${(props) => props.fontSize};
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: 1em;
   font-weight:  ${(props) => props.fontWeight};
   padding: ${(props) => props.padding};
   width: ${(props) => props.width};

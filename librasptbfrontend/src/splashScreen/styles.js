@@ -15,12 +15,10 @@ export const Banner = styled.div`
   margin: auto;
   padding: 2%;
   border-radius: 3px;
-
   h1 {
     font-weight: 400;
     font-size: 2em;
   }
-
   h2 {
     font-size: 1em;
     font-weight: 200;

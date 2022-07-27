@@ -1,12 +1,13 @@
 import React from "react";
 import HeaderOne from "../header/index.js";
-import { DivInputForm, Title, DivSelect, DivInput, Divs, Div } from "./styles.js";
+import { Title, DivSelect, DivInput, Divs, Div } from "./styles.js";
 import ButtonJS from "../components/Button/index.js";
 import InputJS from "../components/Input/index.js";
 import { useState, useEffect } from "react";
-import axios, { post } from "axios";
+import axios from "axios";
 import Modal from "react-modal";
 import ThreeDotsWave from "../components/ThreeDotsWave/index.js";
+import { Redirect } from "react-router-dom";
 function FormAlternativaVideo() {
   const [categoriasQuestao, setCategoriasQuestao] = useState([]);
   let token = localStorage.getItem('tokenLibrasPTB');
@@ -43,7 +44,7 @@ function FormAlternativaVideo() {
     if (categoriasQuestao === [] || imagemQuestao === undefined || alternativaCerta === undefined || alternativaErrada1 === undefined || alternativaErrada2 === undefined || alternativaErrada3 === undefined || alternativaErrada4 === undefined) {
       alert('Dados incompletos')
     } else {
-      setCategoriasQuestao([])
+     // setCategoriasQuestao([])
       setLoading(true);
       for (let i = 0; i < categorias.length; i++) {
         if (document.getElementsByClassName('categoria')[i].checked) {
@@ -74,7 +75,7 @@ function FormAlternativaVideo() {
   const [loadingCriarCategoria, setLoadingCriarCategoria] = useState(false)
 
   let buttonContent;
-  if (loading == false) {
+  if (loading === false) {
     buttonContent = <ButtonJS
       onClick={criaQuestao}
       padding={"3%"}
@@ -89,21 +90,23 @@ function FormAlternativaVideo() {
   }
 
   let buttonCategoriesContent;
-  if (loadingCriarCategoria == false) {
-    buttonCategoriesContent = <ButtonJS
-      onClick={criaCategoria}
-      padding={"2%"}
-      width={"25vw"}
-      backgroundColor={"rgba(142, 202, 230, 0.5)"}
-      borderRadius={"10px"}
-      name={"Criar"}
-    />
+  if (loadingCriarCategoria === false) {
+    buttonCategoriesContent = (
+      <ButtonJS
+        onClick={criaCategoria}
+        padding={"2%"}
+        width={"25vw"}
+        backgroundColor={"rgba(142, 202, 230, 0.5)"}
+        borderRadius={"10px"}
+        name={"Criar"}
+      />
+    );
   } else {
     buttonCategoriesContent = <div style={{ display: 'flex', justifyContent: 'center' }}><ThreeDotsWave /></div>
   }
   useEffect(() => {
     console.log(categoriasQuestao)
-    if (categoriasQuestao !== []) {
+    if (categoriasQuestao !== [] || categoriasQuestao==undefined) {
 
       const criaQuestaoNoBanco = async (e) => {
         const fd = new FormData();
@@ -143,7 +146,6 @@ function FormAlternativaVideo() {
     };
     getCategorias();
   }, []);
-  let header;
   const [isLoggedIn, setIsLoggedIn] = useState()
   useEffect(() => {
     let token = localStorage.getItem('tokenLibrasPTB');
@@ -154,15 +156,14 @@ function FormAlternativaVideo() {
       setIsLoggedIn(response.data.msg);
       console.log(isLoggedIn)
     };
-    getLogin();
+    try{
+      getLogin();
+    } catch(error){
+      setIsLoggedIn('notLoggedIn');
+    }
   }, []);
-  if (isLoggedIn === 'loggedIn') {
-    header = <HeaderOne logged={true}></HeaderOne>
-  } else {
-    header = <HeaderOne logged={false}></HeaderOne>
-  }
-
-  if (isLoggedIn === 'loggedIn') {
+  let  header = <HeaderOne logged={true}></HeaderOne>
+  if (isLoggedIn === 'loggedIn'  || isLoggedIn === undefined) {
     return (
       <>
         {header}
@@ -253,6 +254,7 @@ function FormAlternativaVideo() {
             </Div>
             <br />
            {buttonContent}
+           <br />
           </form>
           <div id="categoria-div">
             <p> Clique no botão abaixo para criar uma categoria</p>
@@ -331,7 +333,8 @@ function FormAlternativaVideo() {
       </>
     );
   } else {
-    return (<div>{header}<p>Faça login primeiro</p></div>)
+    return (<div>{header}<Redirect to="/login" />
+    </div>)
   }
 }
 export default FormAlternativaVideo;

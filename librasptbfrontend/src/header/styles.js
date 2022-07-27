@@ -9,8 +9,9 @@ export const Header = styled.header`
   margin-bottom: 2%;
   a {
     text-decoration: none;
+    display: flex;
+    align-self: center;
     color: white;
-    font-size: 1em;
     margin-right: 2%;
     &:hover {
       color: #cccccc;

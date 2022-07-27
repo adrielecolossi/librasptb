@@ -44,7 +44,7 @@ let header;
         "http://localhost:3001/login", { params: { token } }
       );
       setIsLoggedIn(response.data.msg);
-    console.log(isLoggedIn)
+  
     };
     getLogin();
   }, []);

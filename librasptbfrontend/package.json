@@ -25,7 +25,7 @@
     "react-dropzone": "^11.4.2",
     "react-icons": "^3.3.0",
     "react-modal": "^3.15.1",
-    "react-router-dom": "^5.2.0",
+    "react-router-dom": "^5.3.3",
     "react-scripts": "4.0.3",
     "request": "^2.88.2",
     "spdy-transport": "^3.0.0",

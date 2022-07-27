@@ -13,39 +13,32 @@ exports.saveQuestaoDigitarMidia = async function (questao) {
   if (questao.categoria == undefined) {
     questao.categoria = 1;
   }
-  result3 = await db.query(
+  let result3 = await db.query(
     "insert into digitarmidia(questao, resposta) values ('" +
       result.rows[0].id +
       "','" +
       questao.resposta +
       "')"
   );
-  result3 = await db.query(
-    "insert into questaocategoria(questao, categoria) values ('" +
+ 
+  for (let i = 0; i < questao.categoria.length; i++) {
+    result3 = await db.query(
+      "insert into questaocategoria(questao, categoria) values ('" +
       result.rows[0].id +
       "','" +
-      questao.categoria +
+      questao.categoria[i] +
       "')"
-  );
-  result2 = await db.query(
-    "insert into midia(url) values ('" + questao.midia + "') RETURNING id; "
-  );
-  result4 = await db.query(
-    "insert into questaomidia(questao, midia) values ('" +
-      result.rows[0].id +
-      "', '" +
-      result2.rows[0].id +
-      "');"
-  );
+    );
+  }
+  
+
+  return result3;
 };
 
 exports.saveQuestaoOrdenarFrase = async function (questao) {
   result = await db.query(
     "insert into questao (id) values((select count(*)+1 from questao)) RETURNING id;"
   );
-  if (questao.categoria == undefined) {
-    questao.categoria = 1;
-  }
 
   result3 = await db.query(
     "insert into ordenar(questao, frase) values ('" +
@@ -54,13 +47,16 @@ exports.saveQuestaoOrdenarFrase = async function (questao) {
       questao.resposta +
       "')"
   );
+  let result4;
+  for (let i =0; i < questao.categoria.length; i++){
   result4 = await db.query(
     "insert into questaocategoria(questao, categoria) values ('" +
       result.rows[0].id +
       "','" +
-      questao.categoria +
+      questao.categoria[i] +
       "')"
   );
+  }
 
   return result4;
 };
@@ -175,7 +171,7 @@ console.log(questao)
       FOREIGN KEY (questao) REFERENCES questao(id)
 );
 */
-
+let result3;
   result3 = await db.query(
     "insert into marcar(questao, opcao1, opcao2, opcao3, opcao4, opcao5) values ('" +
       result.rows[0].id +
@@ -191,10 +187,10 @@ console.log(questao)
       questao.alternativaErrada4 +
       "')"
   );
-  result2 = await db.query(
+  let result2 = await db.query(
     "insert into midia(url) values ('" + questao.midia + "') RETURNING id; "
   );
-  result5 = await db.query(
+  let result5 = await db.query(
     "insert into questaomidia(questao, midia) values ('" +
       result.rows[0].id +
       "', '" +

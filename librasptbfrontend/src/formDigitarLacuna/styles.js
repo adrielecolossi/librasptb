@@ -9,17 +9,19 @@ export const Title = styled.h1`
 `;
 
 export const DivInput = styled.div`
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
   width: 40%;
   height: 50vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  background-color:  rgba(142,202,230,0.2);
-   @media only screen and (min-width: 300px) and (max-device-width: 800px) {
-      width: 65%;
-      margin-bottom: 2%;
-   }
+  background-color: rgba(142, 202, 230, 0.2);
+  @media only screen and (min-width: 300px) and (max-device-width: 800px) {
+    width: 90%;
+    height: 65vh;
+    margin-bottom: 2%;
+  }
 `;
 
 export const Divs = styled.div`
@@ -29,11 +31,12 @@ export const Divs = styled.div`
 `;
 
 export const DivInputForm = styled.form`
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  background-color:  rgba(142,202,230,0.2);
+  background-color: rgba(142, 202, 230, 0.2);
   padding: 2%;
   div {
     display: flex;
@@ -44,7 +47,7 @@ export const DivInputForm = styled.form`
   }
   @media only screen and (min-width: 300px) and (max-device-width: 500px) {
     div {
-      width: 60%;
+      width: 80%;
       justify-content: center;
     }
   }

@@ -5,6 +5,7 @@ import HeaderOne from "../header/index.js";
 import { DivInputForm, Title, DivSelect, DivInput, Divs } from "./styles.js";
 import ButtonJS from "../components/Button/index.js";
 import InputJS from "../components/Input/index.js"
+import { Redirect } from "react-router-dom";
 function FormMarcarLacuna() {
 
   const criaCategoria = async (e) => {
@@ -99,7 +100,11 @@ function FormMarcarLacuna() {
       setIsLoggedIn(response.data.msg);
 
     };
-    getLogin();
+    try{
+      getLogin();
+    } catch(error){
+      setIsLoggedIn('notLoggedIn');
+    }
   }, []);
   if (isLoggedIn === 'loggedIn') {
     header = <HeaderOne logged={true}></HeaderOne>
@@ -108,7 +113,7 @@ function FormMarcarLacuna() {
   }
 
 
-  if (isLoggedIn === 'loggedIn') {
+  if (isLoggedIn === 'loggedIn'  || isLoggedIn === undefined) {
 
     return (
       <>
@@ -155,9 +160,9 @@ function FormMarcarLacuna() {
                 value={fraseQuestao}
               />
             </div>
+            <br />
             <div>
               <label for="correct">Alternativa Correta</label>
-
               <InputJS
                 id="inputfrase"
                 type="text"
@@ -215,6 +220,7 @@ function FormMarcarLacuna() {
                 value={alternativaErrada4}
               />
             </div>
+            <br />
             <ButtonJS
               onClick={criaQuestao}
               padding={"3%"}
@@ -296,7 +302,8 @@ function FormMarcarLacuna() {
       </>
     );
   } else {
-    return (<div>{header}<p>Faça login primeiro</p></div>)
+    return (<div>{header}<Redirect to="/login" />
+    </div>)
   }
 }
 export default FormMarcarLacuna;

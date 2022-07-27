@@ -1,21 +1,18 @@
 import React, { useState, useEffect } from "react";
 import HeaderOne from "../header/index.js";
-import axios, { post } from "axios";
+import axios from "axios";
 import { DivInputForm, Title, DivSelect, DivInput, Divs } from "./styles.js";
 import ButtonJS from "../components/Button/index.js";
 import InputJS from "../components/Input/index.js";
 import Modal from "react-modal";
-
+import { Redirect } from "react-router-dom";
 /*
-
 CREATE TABLE preencherdigitando(
         questao INTEGER NOT NULL,
       frase VARCHAR(300) NOT NULL,
       resposta varchar(40),
       FOREIGN KEY (questao) REFERENCES questao(id)
-) 
-
-
+)
 */
 function FormDigitarLacuna() {
   const [nomeCategoria, setNomeCategoria] = useState();
@@ -23,7 +20,6 @@ function FormDigitarLacuna() {
   const [fraseQuestao, setFraseQuestao] = useState();
   const [palavraQuestao, setPalavraQuestao] = useState();
   const [categoriaQuestao, setCategoriaQuestao] = useState(1);
-  const [showModal, setShowModal] = useState(false);
   const token = localStorage.getItem("tokenLibrasPTB");
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
@@ -49,6 +45,7 @@ function FormDigitarLacuna() {
         })
         .then((response) => {
           alert('Categoria criada com sucesso');
+          
         })
         .catch((error) => {
           alert(error);
@@ -90,7 +87,11 @@ function FormDigitarLacuna() {
       setIsLoggedIn(response.data.msg);
       console.log(isLoggedIn)
     };
-    getLogin();
+    try{
+      getLogin();
+    } catch(error){
+      setIsLoggedIn('notLoggedIn');
+    }
 
   }, []);
 
@@ -109,7 +110,7 @@ function FormDigitarLacuna() {
     header = <HeaderOne logged={false}></HeaderOne>
   }
 
-  if (isLoggedIn == 'loggedIn') {
+  if (isLoggedIn === 'loggedIn'  || isLoggedIn === undefined) {
     return (
       <>
         <HeaderOne logged={true}></HeaderOne>
@@ -249,7 +250,8 @@ function FormDigitarLacuna() {
       </>
     );
   } else {
-    return (<div>{header}<p>Faça login primeiro</p></div>)
+    return (<div>{header}<Redirect to="/login" />
+    </div>)
   }
 
 }

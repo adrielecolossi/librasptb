@@ -12,18 +12,18 @@ function removeStorage(){
   localStorage.removeItem('user');
   window.location.href= "http://localhost:3000/login"
 }
-  if (props.logged == true) {
+  if (props.logged === true) {
     return (
       <>
         <Header>
           <Link to="/home">Home</Link>
           <ButtonJS 
           onClick={removeStorage}
-          padding={"0.2%"}
+          padding={"0%"}
           name={"Logout"}
           color={"white"}
           backgroundColor={"#00537a"}
-          fontSize={"1em"}/>
+          fontSize={"1.1em"}/>
         </Header>
       </>
     );

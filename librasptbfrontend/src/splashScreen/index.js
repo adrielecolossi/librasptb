@@ -3,6 +3,7 @@ import HeaderOne from "../header/index.js";
 import { Banner, BannerCards, Title } from "./styles";
 import Card from "../components/Card";
 import axios from "axios";
+import { Redirect } from "react-router-dom";
 function SplashScreen() {
   const cardsContent = [
     {
@@ -46,9 +47,10 @@ function SplashScreen() {
       title: "Alternativa correta (frase)",
       subtitle:
         "Modelo em que se marca uma alternativa correta de qual é a frase",
-      link: "./FormAlternativaFraseCorreta",
+      link: "./FormAlternativaLacuna",
     },
   ];
+
   let header;
   const [isLoggedIn, setIsLoggedIn]= useState()
 
@@ -73,7 +75,7 @@ header = <HeaderOne logged={false}></HeaderOne>
       {header}
       <Banner>
         <Title>
-          <h1>Crie questões para o aplicativo LIBRAS-PTB!</h1>
+          <h1>Crie, edite e exclua questões para o LIBRAS-PTB!</h1>
           <h2>Basta fazer login para começar a desenvolver!</h2>
         </Title>
         <img src="https://drive.google.com/uc?id=1JJYSNQ5xjSx8QYRRDDd7OtoiN1W7_9yS" />
@@ -89,6 +91,15 @@ header = <HeaderOne logged={false}></HeaderOne>
             />
           );
         })}
+      </BannerCards>
+
+      <BannerCards>
+      <Card
+              image={"https://drive.google.com/uc?id=1JJYSNQ5xjSx8QYRRDDd7OtoiN1W7_9yS"}
+              title={"Crie, edite, e exclua categorias do LibrasPTB"}
+              subtitle={"Basta fazer login!"}
+              link={"./categorias"}
+            />
       </BannerCards>
     </>
   );

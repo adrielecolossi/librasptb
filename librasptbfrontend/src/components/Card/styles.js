@@ -13,6 +13,7 @@ export const DivCard = styled.div`
   display: flex;
   background-color: white;
   border-radius: 20px;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
   width: 100%;
   margin-bottom: 2%;
   img {
@@ -91,29 +92,29 @@ export const DivCard = styled.div`
     margin: auto;
     margin-top: 2%;
     div {
-      font-size: 0.7em;
+      font-size: 0.8em;
     }
   }
-  @media only screen and (min-width: 300px) and (max-device-width: 450px) {
+  @media only screen and (min-width: 350px) and (max-device-width: 450px) {
     width: 90%;
     margin: auto;
     margin-top: 5%;
     div {
-      font-size: 0.5em;
+      font-size: 0.7em;
     }
     img {
       width: 40%;
       height: 100%;
     }
   }
-  @media only screen and (max-device-width: 300px) {
+  @media only screen and (max-device-width: 350px) {
     margin: auto;
     margin-top: 5%;
     div {
-      font-size: 0.4em;
+      font-size: 0.6em;
     }
     img {
-      width: 60%;
+      width: 50%;
       height: 100%;
     }
   }
